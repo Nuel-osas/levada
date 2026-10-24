@@ -1,28 +1,26 @@
 "use client";
 
 import { NETWORK, links } from "@/lib/config";
-import { fmtPct } from "@/lib/format";
+import { fmtPct, fmtUsdShort, utcDay } from "@/lib/format";
 import { useApy } from "@/lib/hooks";
 
 /** The rate, inline in the headline, as a yield sticker. */
 export function RateChip() {
   const apy = useApy();
   return (
-    <span className="rate-chip" title="Mezo's sMUSD savings rate, via DefiLlama">
+    <span className="rate-chip" title="Mezo's sMUSD savings rate on Mezo mainnet, via DefiLlama">
       {fmtPct(apy?.apy)}
     </span>
   );
 }
 
-/** Where the headline number comes from, in one line. */
+/** Where the headline number comes from, in one line, labelled as Mezo mainnet (the app itself runs on testnet). */
 export function RateSource() {
   const apy = useApy();
-  const when = apy?.stale
-    ? `on ${new Date(apy.asOf).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" })}`
-    : "today";
   return (
     <>
-      {fmtPct(apy?.apy)} a year is Mezo&apos;s sMUSD savings rate {when}, via{" "}
+      <b>Mezo mainnet {apy?.stale ? `on ${utcDay(apy.asOf)}` : "today"}:</b> sMUSD pays {fmtPct(apy?.apy)} a year
+      {apy?.tvlUsd ? ` on ${fmtUsdShort(apy.tvlUsd)} saved` : ""}, via{" "}
       <a href={links.defillama} target="_blank" rel="noreferrer">
         DefiLlama
       </a>

@@ -10,11 +10,17 @@ const deployment = (NETWORK === "mainnet" ? mainnet : testnet) as { vault: Addre
 
 export const baseChain = NETWORK === "mainnet" ? base : baseSepolia;
 
+/** JSON-RPC endpoints for this network. Optional overrides point the app at a dedicated (less rate-limited) RPC. */
+export const rpcUrls = {
+  base: process.env.NEXT_PUBLIC_BASE_RPC_URL || net.base.rpc,
+  mezo: process.env.NEXT_PUBLIC_MEZO_RPC_URL || net.mezo.rpc,
+};
+
 export const mezoChain = defineChain({
   id: net.mezo.chainId,
   name: NETWORK === "mainnet" ? "Mezo" : "Mezo Testnet",
   nativeCurrency: { name: "Bitcoin", symbol: "BTC", decimals: 18 },
-  rpcUrls: { default: { http: [net.mezo.rpc] } },
+  rpcUrls: { default: { http: [rpcUrls.mezo] } },
   blockExplorers: { default: { name: "Mezo Explorer", url: net.mezo.explorer } },
 });
 
@@ -41,6 +47,30 @@ export const links = {
 };
 
 export const wormholeChains = { mezo: net.mezo.wormholeChain, base: net.base.wormholeChain };
+
+/** Mainnet MUSD on Base and Mezo's sMUSD, for the live "Mezo mainnet today" figures (whatever NETWORK is). */
+export const MAINNET = {
+  baseRpc: networks.mainnet.base.rpc,
+  baseMusd: networks.mainnet.base.musd as Address,
+  savings: networks.mainnet.mezo.savings as Address,
+};
+
+/**
+ * Launch settings from contracts/script/Deploy.s.sol (FEE_BPS and BUFFER_BPS defaults). Used for
+ * estimates before the contracts are live; after that the app reads feeBps and bufferBps on-chain.
+ */
+export const LAUNCH = { feeBps: 1_000n, bufferBps: 1_000n };
+
+/**
+ * Mezo's own app, for people who already hold MUSD or BTC there. Paths are from mezo.org's route
+ * table (/earn/vaults/$vaultAddress names the sMUSD vault "MUSD Savings Vault").
+ */
+const mezoApp = NETWORK === "mainnet" ? "https://mezo.org" : "https://testnet.mezo.org";
+export const mezoLinks = {
+  savingsVault: `${mezoApp}/earn/vaults/${net.mezo.savings}`,
+  borrow: `${mezoApp}/borrow`,
+  faucet: NETWORK === "testnet" ? "https://faucet.test.mezo.org/" : undefined,
+};
 
 /** Human names for the two chains on this network. */
 export const chainNames =

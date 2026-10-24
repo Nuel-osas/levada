@@ -5,14 +5,15 @@ import { useEffect, useState, type ReactNode } from "react";
 import { WagmiProvider, http } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RainbowKitProvider, darkTheme, getDefaultConfig, lightTheme } from "@rainbow-me/rainbowkit";
-import { BRAND, baseChain } from "@/lib/config";
+import { BRAND, baseChain, rpcUrls } from "@/lib/config";
 import type { Apy } from "@/lib/apy";
+import type { Market } from "@/lib/market";
 
 const config = getDefaultConfig({
   appName: BRAND.name,
   projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID ?? "levada-dev",
   chains: [baseChain],
-  transports: { [baseChain.id]: http() },
+  transports: { [baseChain.id]: http(rpcUrls.base) },
   ssr: true,
 });
 
@@ -32,10 +33,23 @@ function useThemeMode() {
   return mode;
 }
 
-export function Providers({ children, apy }: { children: ReactNode; apy: Apy }) {
+export function Providers({
+  children,
+  apy,
+  market,
+  faucet,
+}: {
+  children: ReactNode;
+  apy: Apy;
+  market: Market;
+  faucet: boolean;
+}) {
+  // Seeded with the server's reads, so live figures are in the first paint (and the HTML).
   const [queryClient] = useState(() => {
     const qc = new QueryClient();
     qc.setQueryData(["apy"], apy);
+    qc.setQueryData(["market"], market);
+    qc.setQueryData(["faucet-ready"], faucet);
     return qc;
   });
   const mode = useThemeMode();

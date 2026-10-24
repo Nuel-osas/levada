@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { DEPLOYED } from "@/lib/config";
+import { DEPLOYED, mezoLinks } from "@/lib/config";
 import { fmtPct, fmtShort, toNum } from "@/lib/format";
 import { useApy, useFlows, useHub, useVault } from "@/lib/hooks";
 import { PixelIcon, type GlyphName } from "./PixelIcon";
 
-/** The four questions a first-time visitor actually has, each answered with one number. */
+type Item = { q: string; icon: GlyphName; a: ReactNode; note: string; links?: { label: string; href: string }[] };
+
+/** The questions a first-time visitor actually has, each answered in one line. */
 export function Questions() {
   const apy = useApy();
   const vault = useVault();
@@ -19,7 +21,7 @@ export function Questions() {
   const total = onMezo + buffer + (toNum(flows?.crossing) ?? 0);
   const live = DEPLOYED && total > 0;
 
-  const items: { q: string; icon: GlyphName; a: ReactNode; note: string }[] = [
+  const items: Item[] = [
     {
       q: "Where is my money right now?",
       icon: "pin",
@@ -34,6 +36,16 @@ export function Questions() {
         </>
       ),
       note: live ? "Read live from both chains." : "The vault keeps a set share on Base, at most half.",
+    },
+    {
+      q: "Do I ever need to go to Mezo?",
+      icon: "home",
+      a: (
+        <>
+          No. Your yield lands on Base. <mark>Nothing to claim on Mezo.</mark>
+        </>
+      ),
+      note: "You only ever sign on Base. The hub on Mezo reports the yield to the vault on Base, where it raises the value of your lsMUSD.",
     },
     {
       q: "Who pays the interest?",
@@ -73,10 +85,25 @@ export function Questions() {
       ),
       note: "Every step is permissionless: if the keeper is slow, anyone can run it.",
     },
+    {
+      q: "Already on Mezo?",
+      icon: "signpost",
+      a: (
+        <>
+          Use Mezo&apos;s own <mark>MUSD Savings Vault</mark>. Levada is for MUSD that lives on Base.
+        </>
+      ),
+      note: "Holding BTC? Borrow MUSD against it on Mezo, then save it there or bring it to Base.",
+      links: [
+        { label: "MUSD Savings Vault", href: mezoLinks.savingsVault },
+        { label: "Borrow MUSD", href: mezoLinks.borrow },
+        ...(mezoLinks.faucet ? [{ label: "Mezo testnet faucet", href: mezoLinks.faucet }] : []),
+      ],
+    },
   ];
 
   return (
-    <div className="qa">
+    <div className="qa" style={{ ["--rows" as string]: items.length }}>
       {items.map((it, i) => (
         <div className="qa__item" key={it.q}>
           <button
@@ -86,13 +113,25 @@ export function Questions() {
             aria-expanded={open === i}
             aria-controls={`a-${i}`}
             onClick={() => setOpen(i)}
+            style={{ ["--row" as string]: i + 1 }}
           >
             <PixelIcon name={it.icon} scale={2} className="qa__icon" />
             <span>{it.q}</span>
           </button>
           <div className="qa__a" id={`a-${i}`} role="region" aria-labelledby={`q-${i}`} hidden={open !== i}>
             <p className="qa__big">{it.a}</p>
-            <p className="qa__note">{it.note}</p>
+            <div className="qa__foot">
+              {it.links && (
+                <p className="qa__links">
+                  {it.links.map((l) => (
+                    <a key={l.label} href={l.href} target="_blank" rel="noreferrer">
+                      {l.label} ↗
+                    </a>
+                  ))}
+                </p>
+              )}
+              <p className="qa__note">{it.note}</p>
+            </div>
           </div>
         </div>
       ))}

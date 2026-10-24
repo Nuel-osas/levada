@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Pixelify_Sans } from "next/font/google";
 import { Providers } from "@/components/Providers";
-import { BRAND } from "@/lib/config";
+import { BRAND, NETWORK } from "@/lib/config";
 import { getApy } from "@/lib/apy";
+import { getMarket } from "@/lib/market";
+import { faucetKey } from "@/lib/faucet-key";
 import "./tokens.css";
 import "./scene-motion.css";
 import "./globals.css";
@@ -46,14 +48,18 @@ export const viewport: Viewport = {
 const themeScript = `(function(){try{var d=document.documentElement,q=new URLSearchParams(location.search).get("theme"),s=null;try{s=localStorage.getItem("levada-theme")}catch(e){}var t=q==="dark"||q==="light"?q:s==="dark"||s==="light"?s:matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t;d.classList.add("js")}catch(e){}})();`;
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const apy = await getApy();
+  const [apy, market] = await Promise.all([getApy(), getMarket()]);
+  // Whether the test-MUSD faucet has a key (a boolean only; the key never leaves the server).
+  const faucet = NETWORK === "testnet" && !!faucetKey();
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable} ${pixel.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
-        <Providers apy={apy}>{children}</Providers>
+        <Providers apy={apy} market={market} faucet={faucet}>
+          {children}
+        </Providers>
       </body>
     </html>
   );

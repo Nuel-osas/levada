@@ -21,6 +21,37 @@ export function fmtShort(n: number | undefined) {
 
 export const fmtPct = (n: number | undefined, dp = 2) => (n === undefined ? "–" : `${n.toFixed(dp)}%`);
 
+/** Dollar prices: $80,557 (dp 0), $0.989 (dp 3). */
+export const fmtUsd = (n: number | undefined, dp = 2) => (n === undefined ? "–" : `$${fmt(n, dp)}`);
+
+/** Small prices to significant figures: $0.00293. */
+export function fmtUsdSig(n: number | undefined, sig = 3) {
+  if (n === undefined || !Number.isFinite(n)) return "–";
+  return `$${n.toLocaleString("en-US", { maximumSignificantDigits: sig, minimumSignificantDigits: sig })}`;
+}
+
+/** Compact dollars for big totals: $2.07M, $80.6K. */
+export function fmtUsdShort(n: number | undefined) {
+  if (n === undefined || !Number.isFinite(n)) return "–";
+  if (n >= 1e9) return `$${(n / 1e9).toFixed(2)}B`;
+  if (n >= 1e6) return `$${(n / 1e6).toFixed(2)}M`;
+  if (n >= 1e4) return `$${(n / 1e3).toFixed(1)}K`;
+  return `$${fmt(n, 0)}`;
+}
+
+/** "10:41 UTC" and "24 Oct", from an ISO time. UTC and a fixed format, so server and client agree. */
+export const utcTime = (iso: string) => `${iso.slice(11, 16)} UTC`;
+export const utcDay = (iso: string) =>
+  new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
+
+/** "4h 32m" / "12m" / "45s" for countdowns. */
+export function fmtSpan(sec: number) {
+  const s = Math.max(0, Math.round(sec));
+  if (s >= 3600) return `${Math.floor(s / 3600)}h ${Math.floor((s % 3600) / 60)}m`;
+  if (s >= 60) return `${Math.floor(s / 60)}m ${String(s % 60).padStart(2, "0")}s`;
+  return `${s}s`;
+}
+
 export function ago(tsSec: number | bigint | undefined, now = Date.now()) {
   if (!tsSec) return "never";
   const s = Math.max(0, Math.floor(now / 1000) - Number(tsSec));

@@ -41,6 +41,9 @@ export const vaultAbi = parseAbi([
   "function hubProfit() view returns (int256)",
   "function reportedProfit() view returns (int256)",
   "function lockedProfitNow() view returns (uint256)",
+  /** The gain locked by the last report and when its 12-hour release began. */
+  "function lockedProfit() view returns (uint256)",
+  "function lockedProfitAt() view returns (uint64)",
   "function PROFIT_UNLOCK() view returns (uint256)",
   "function lastReport() view returns (uint256 assets, uint256 cumulativeIn, uint256 cumulativeOut, uint64 timestamp)",
   "function hasReport() view returns (bool)",
@@ -92,6 +95,8 @@ export const hubAbi = parseAbi([
 
 export const erc20Abi = parseAbi([
   "function balanceOf(address account) view returns (uint256)",
+  "function totalSupply() view returns (uint256)",
   "function allowance(address owner, address spender) view returns (uint256)",
   "function approve(address spender, uint256 amount) returns (bool)",
+  "function transfer(address to, uint256 amount) returns (bool)",
 ]);

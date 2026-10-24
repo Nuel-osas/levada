@@ -17,6 +17,7 @@ import { erc20Abi, vaultAbi } from "@/lib/abis";
 import { fmt, fmtMusd, fmtPct, fmtShort, parseAmount, toNum } from "@/lib/format";
 import { netRate, rememberExit, useApy, useExits, useHub, useVault, type ExitView } from "@/lib/hooks";
 import { Exits } from "./Exits";
+import { FaucetAction } from "./Faucet";
 import { sceneEvent } from "./SceneHud";
 
 type Tab = "save" | "withdraw";
@@ -91,6 +92,15 @@ export function SavePanel() {
     setIsMax(false);
     setNote(undefined);
   }
+
+  // Test MUSD from the faucet: once it lands (the route waits for the receipt), the save is one click away.
+  const onFaucet = () => {
+    if (!DEPLOYED) return;
+    setTab("save");
+    setAmount((a) => a || "250");
+    setIsMax(false);
+    void vault.refetch();
+  };
 
   async function send(label: string, write: () => Promise<Hash>): Promise<{ hash: Hash; receipt: TransactionReceipt } | undefined> {
     setBusy(label);
@@ -293,6 +303,8 @@ export function SavePanel() {
             </>
           )}
         </dl>
+
+        {tab === "save" && <FaucetAction where="panel" onSent={onFaucet} />}
 
         {tab === "withdraw" && queued && !over && (
           <p className="panel__hint">

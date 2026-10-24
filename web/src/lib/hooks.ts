@@ -7,6 +7,7 @@ import { useAccount, usePublicClient, useReadContract, useReadContracts } from "
 import { DEPLOYED, addresses, baseChain, links, mezoChain, wormholeChains } from "./config";
 import { erc20Abi, hubAbi, vaultAbi } from "./abis";
 import type { Apy } from "./apy";
+import type { Market } from "./market";
 import { toNum } from "./format";
 
 /** Mezo is read directly (the wallet only ever talks to Base). JSON-RPC calls are batched. */
@@ -27,6 +28,20 @@ export function useApy() {
     },
     staleTime: 600_000,
     refetchInterval: 600_000,
+  }).data;
+}
+
+/** Live Mezo mainnet figures (MUSD supply on Base, BTC/MUSD/MEZO prices), server-cached for 2 minutes. */
+export function useMarket() {
+  return useQuery({
+    queryKey: ["market"],
+    queryFn: async () => {
+      const res = await fetch("/api/market");
+      if (!res.ok) throw new Error("market");
+      return (await res.json()) as Market;
+    },
+    staleTime: 120_000,
+    refetchInterval: 120_000,
   }).data;
 }
 
@@ -60,6 +75,8 @@ export function useVault() {
       { address: addresses.baseMusd, abi: erc20Abi, functionName: "allowance", args: [user, VAULT] },
       { ...v, functionName: "bridgeable" },
       { ...v, functionName: "PROFIT_UNLOCK" },
+      { ...v, functionName: "lockedProfit" },
+      { ...v, functionName: "lockedProfitAt" },
     ],
   });
   const d = res.data;
@@ -101,6 +118,9 @@ export function useVault() {
     bridgeable: d?.[19],
     /** Seconds over which each report's gain is released into the share price. */
     profitUnlock: d?.[20],
+    /** The gain locked by the last report, and when (unix seconds) its release began. */
+    lockedAtReport: d?.[21],
+    lockedProfitAt: d?.[22],
     /** convertToAssets(shares): the wallet's savings in MUSD, as the vault values them now. */
     position: shares === 0n ? 0n : position.data,
   };
@@ -203,7 +223,7 @@ export function useEstimate(base: number | undefined, perYear: number, key: stri
  * The numbers behind the big odometer and the mobile bar, ticking every second:
  * - "mine": the wallet's savings, convertToAssets(shares) extrapolated at the saver's net rate;
  * - "earned": yield earned by all savers on Mezo, extrapolated at the hub's rate after fees;
- * - "example": before launch, 1,000 MUSD at Mezo's rate (clearly labelled as an example).
+ * - "example": before launch, an amount the visitor picks, at the net rate (clearly labelled).
  */
 export function useSavings() {
   const apy = useApy();
@@ -223,9 +243,8 @@ export function useSavings() {
     "earned",
     now,
   );
-  const example = useEstimate(1000, 10 * (apy?.apy ?? 0), "example", now);
   const mode: "mine" | "earned" | "example" = hasPosition ? "mine" : DEPLOYED ? "earned" : "example";
-  return { mode, apy, rate, vault, hub, flows, pos, mine, earned, example, now };
+  return { mode, apy, rate, vault, hub, flows, pos, mine, earned, now };
 }
 
 /* ------------------------------------------------------------------ exits */

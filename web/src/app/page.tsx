@@ -1,8 +1,12 @@
+import Link from "next/link";
 import { Balance } from "@/components/Balance";
 import { Connect } from "@/components/Connect";
+import { HeroTry } from "@/components/Faucet";
+import { FillLine } from "@/components/FillLine";
 import { Flow } from "@/components/Flow";
 import { RateChip, RateSource } from "@/components/HeroRate";
 import { Lockup } from "@/components/Lockup";
+import { MezoStrip } from "@/components/MezoStrip";
 import { MobileBar } from "@/components/MobileBar";
 import { Questions } from "@/components/Questions";
 import { Reveal } from "@/components/Reveal";
@@ -12,7 +16,7 @@ import { SceneLegend } from "@/components/SceneHud";
 import { Steps } from "@/components/Steps";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Trust } from "@/components/Trust";
-import { BRAND, NETWORK, addresses, chainNames, links } from "@/lib/config";
+import { BRAND, NETWORK, addresses, chainNames, links, mezoLinks } from "@/lib/config";
 
 export const revalidate = 600;
 
@@ -32,6 +36,7 @@ export default function Home() {
             <a href="#how">How it works</a>
             <a href="#questions">Questions</a>
             <a href="#proof">Proof</a>
+            <Link href="/status">Status</Link>
           </nav>
           <div className="top__right">
             {NETWORK === "testnet" && <span className="chip chip--sm">Testnet</span>}
@@ -39,6 +44,7 @@ export default function Home() {
             <Connect />
           </div>
         </div>
+        <MezoStrip />
       </header>
 
       <main id="top">
@@ -51,11 +57,12 @@ export default function Home() {
                   Mezo&apos;s savings rate <RateChip />,
                 </span>
                 <br />
-                <span className="t-cool">on Base.</span>
+                <span className="t-cool hero__payoff">on Base.</span>
               </h1>
               <p className="hero__lede">
-                Deposit MUSD on Base. It earns Mezo&apos;s savings rate, paid by Bitcoin borrowers. No bridging by hand,
-                no BTC for gas, withdraw any time.
+                Deposit MUSD on Base and earn Mezo&apos;s savings rate, paid by Bitcoin borrowers. No bridging by hand, no
+                BTC for gas, withdraw any time.
+                <b className="hero__promise">Your yield lands on Base. Nothing to claim on Mezo, ever.</b>
               </p>
               <div className="hero__actions" id="hero-actions">
                 <a className="btn-primary" href="#save">
@@ -67,9 +74,12 @@ export default function Home() {
                   How it works <span aria-hidden="true">↓</span>
                 </a>
               </div>
-              <p className="hero__source">
-                <RateSource />
-              </p>
+              <div className="hero__meta">
+                <HeroTry />
+                <p className="hero__source">
+                  <RateSource />
+                </p>
+              </div>
             </div>
             <Scene />
             <div className="container">
@@ -84,6 +94,8 @@ export default function Home() {
         </div>
 
         <Flow />
+
+        <FillLine />
 
         <section className="save container" id="save" aria-labelledby="save-title">
           <h2 id="save-title" className="sr-only">
@@ -164,9 +176,26 @@ export default function Home() {
               </a>
             </div>
             <div>
+              <p className="foot__h">Mezo</p>
+              <a href={mezoLinks.savingsVault} target="_blank" rel="noreferrer">
+                MUSD Savings Vault ↗
+              </a>
+              <a href={mezoLinks.borrow} target="_blank" rel="noreferrer">
+                Borrow MUSD ↗
+              </a>
+              {mezoLinks.faucet && (
+                <a href={mezoLinks.faucet} target="_blank" rel="noreferrer">
+                  Testnet faucet ↗
+                </a>
+              )}
+            </div>
+            <div>
               <p className="foot__h">Data</p>
               <a href={links.defillama} target="_blank" rel="noreferrer">
-                Rate: DefiLlama ↗
+                Rate and prices: DefiLlama ↗
+              </a>
+              <a href="/api/market" target="_blank" rel="noreferrer">
+                Live figures: /api/market ↗
               </a>
               <a href={`https://wormholescan.io/${NETWORK === "testnet" ? "?network=Testnet" : ""}`} target="_blank" rel="noreferrer">
                 Bridge: Wormholescan ↗
@@ -177,6 +206,7 @@ export default function Home() {
               <a href="#how">How it works</a>
               <a href="#questions">Questions</a>
               <a href="#proof">Proof</a>
+              <Link href="/status">Status</Link>
             </div>
           </nav>
         </div>
