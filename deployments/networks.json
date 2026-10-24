@@ -1,0 +1,53 @@
+{
+  "testnet": {
+    "mezo": {
+      "chainId": 31611,
+      "wormholeChain": 50,
+      "rpc": "https://rpc.test.mezo.org",
+      "explorer": "https://explorer.test.mezo.org",
+      "musd": "0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503",
+      "savings": "0x6f461c68B2c5492C0F5CCEc5a264d692aA7A8e16",
+      "ntt": "0x20888B20e2F5F405d44261dA96467a1b1acE15be",
+      "transceiver": "0x0E628A1C34c92F0aA85aF998814Ce4f03cAA5913",
+      "wormhole": "0x268557122Ffd64c85750d630b716471118F323c8",
+      "borrowerOperations": "0xCdF7028ceAB81fA0C6971208e83fa7872994beE5"
+    },
+    "base": {
+      "chainId": 84532,
+      "wormholeChain": 10004,
+      "rpc": "https://sepolia.base.org",
+      "explorer": "https://sepolia.basescan.org",
+      "musd": "0x560985f804De8187E8FBA94F7127Bc4c0e54AEA5",
+      "ntt": "0x6590DFF6abEd7C077839E8227A4f12Ec90E6D85F",
+      "transceiver": "0x2ada2d985Ce69b467d2D8372494Df021BEDfdbf2",
+      "wormhole": "0x79A1027a6A159502049F10906D333EC57E95F083"
+    },
+    "wormholescan": "https://api.testnet.wormholescan.io",
+    "nttInstructions": "0x01010101"
+  },
+  "mainnet": {
+    "mezo": {
+      "chainId": 31612,
+      "wormholeChain": 50,
+      "rpc": "https://mainnet.mezo.public.validationcloud.io",
+      "explorer": "https://explorer.mezo.org",
+      "musd": "0xdD468A1DDc392dcdbEf6db6e34E89AA338F9F186",
+      "savings": "0xb4D498029af77680cD1eF828b967f010d06C51CC",
+      "ntt": "0x7efb386675d75280D39Aae42964A6776DE0ee0bD",
+      "transceiver": "0x62DEeaFEe06c7442A21c93edeDc79A0cb5791C83",
+      "wormhole": "0xaBf89de706B583424328B54dD05a8fC986750Da8"
+    },
+    "base": {
+      "chainId": 8453,
+      "wormholeChain": 30,
+      "rpc": "https://mainnet.base.org",
+      "explorer": "https://basescan.org",
+      "musd": "0xdD468A1DDc392dcdbEf6db6e34E89AA338F9F186",
+      "ntt": "0x3EB418BdBE95b4b9cf465ecfBD8424685ACD1Bc1",
+      "transceiver": "0x15C465E7dF34f8cA06FDCae0569206cEDf3f4467",
+      "wormhole": "0xbebdb6C8ddC678FfA9f8748f85C815C556Dd8ac6"
+    },
+    "wormholescan": "https://api.wormholescan.io",
+    "nttInstructions": "0x01010101"
+  }
+}

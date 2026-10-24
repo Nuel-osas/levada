@@ -1,0 +1,27 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc = "0.8.24"
+evm_version = "london" # Mezo does not support PUSH0
+optimizer = true
+optimizer_runs = 200
+fs_permissions = [{ access = "read", path = "../deployments" }]
+remappings = [
+  "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+  "forge-std/=lib/forge-std/src/",
+]
+
+[fuzz]
+runs = 512
+
+[invariant]
+runs = 128
+depth = 64
+fail_on_revert = false
+
+[rpc_endpoints]
+mezo_testnet = "https://rpc.test.mezo.org"
+base_sepolia = "https://sepolia.base.org"
+mezo = "https://mainnet.mezo.public.validationcloud.io"
+base = "https://mainnet.base.org"

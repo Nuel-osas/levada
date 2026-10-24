@@ -1,0 +1,38 @@
+# Runs one keeper pass every 5 minutes, so the demo keeps working through judging week
+# without anyone's laptop. Every action it takes is permissionless; the key only pays gas.
+name: keeper
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+    inputs:
+      network:
+        description: testnet or mainnet
+        default: testnet
+
+concurrency:
+  group: keeper-${{ github.event.inputs.network || 'testnet' }}
+  cancel-in-progress: false
+
+jobs:
+  pass:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        network: ${{ github.event_name == 'workflow_dispatch' && fromJSON(format('["{0}"]', github.event.inputs.network)) || fromJSON(vars.KEEPER_NETWORKS || '["testnet"]') }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: keeper/package-lock.json
+      - run: npm ci
+        working-directory: keeper
+      - run: npx tsx src/index.ts once
+        working-directory: keeper
+        env:
+          NETWORK: ${{ matrix.network }}
+          KEEPER_PRIVATE_KEY: ${{ secrets.KEEPER_PRIVATE_KEY }}

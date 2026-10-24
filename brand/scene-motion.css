@@ -1,0 +1,26 @@
+/* Levada hero scene motion.
+   Inline scene.svg (not <img>) inside an element with class "levada-scene", then load this file.
+   Units are art pixels: the scene is drawn at scale(4), so translate(2px, -1px) = one isometric step. */
+
+.levada-scene .coin            { animation: lv-flow 2.4s steps(8, end) infinite; }
+.levada-scene #coin-1          { animation-name: lv-flow-in; }   /* leaves the vault */
+.levada-scene #coin-3          { animation-name: lv-flow-out; }  /* enters the Base tower */
+.levada-scene .sparkle,
+.levada-scene .glint           { animation: lv-twinkle 1.6s steps(1, end) infinite; }
+.levada-scene .glint           { animation-delay: -0.8s; }
+.levada-scene .beacon          { animation: lv-blink 2s steps(1, end) infinite; }
+.levada-scene .boat            { animation: lv-bob 2.8s steps(1, end) infinite; }
+.levada-scene .ripples         { animation: lv-shimmer 3.2s steps(1, end) infinite; }
+
+/* one coin spacing = 8 isometric steps = (+16, -8) art px; the loop is seamless */
+@keyframes lv-flow     { from { transform: translate(0, 0); } to { transform: translate(16px, -8px); } }
+@keyframes lv-flow-in  { from { transform: translate(0, 0); opacity: 0; } 25% { opacity: 1; } to { transform: translate(16px, -8px); opacity: 1; } }
+@keyframes lv-flow-out { from { transform: translate(0, 0); opacity: 1; } 50% { opacity: 1; } 85% { opacity: 0; } to { transform: translate(16px, -8px); opacity: 0; } }
+@keyframes lv-twinkle  { 0%, 55% { opacity: 1; } 60%, 80% { opacity: 0.25; } 85%, 100% { opacity: 1; } }
+@keyframes lv-blink    { 0%, 70% { opacity: 1; } 75%, 100% { opacity: 0.45; } }
+@keyframes lv-bob      { 0%, 50% { transform: translate(0, 0); } 50.01%, 100% { transform: translate(0, 1px); } }
+@keyframes lv-shimmer  { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0.6; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .levada-scene * { animation: none !important; }
+}

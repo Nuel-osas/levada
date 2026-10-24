@@ -1,0 +1,18 @@
+# secrets
+.env*
+!.env.example
+
+# private hackathon notes (planning, field scan, design references)
+notes/
+
+# build output
+node_modules/
+web/.next/
+web/next-env.d.ts
+web/src/lib/deployments/
+contracts/out/
+contracts/cache/
+contracts/broadcast/*/31611/
+contracts/broadcast/*/84532/
+*.log
+.DS_Store

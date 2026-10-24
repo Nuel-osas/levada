@@ -1,0 +1,181 @@
+/* ==========================================================================
+   Levada brand tokens  ·  v1.0  ·  2026-10-23
+   Isometric pixel identity for "Mezo's savings rate, on Base."
+   Light theme is the default. Dark theme applies with prefers-color-scheme:
+   dark (unless <html data-theme="light">) or with <html data-theme="dark">.
+   Contrast ratios are WCAG 2.x, measured against --lv-bg of the same theme.
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..500&family=Pixelify+Sans:wght@400..700&display=swap");
+
+:root {
+  /* ---------- Primitives ---------- */
+  /* Ember: warm, the source side (Bitcoin / Mezo). Orange-red, never raspberry. */
+  --lv-ember-50: #FFF4EC; --lv-ember-100: #FFE2CF; --lv-ember-200: #FFC29C;
+  --lv-ember-300: #FF9C68; --lv-ember-400: #FF7A45; --lv-ember-500: #F05A2A;
+  --lv-ember-600: #C8411F; --lv-ember-700: #962D1E; --lv-ember-800: #5E1C18;
+  /* Tide: cool, the home side (Base). Cobalt-periwinkle, not Base blue #0052FF. */
+  --lv-tide-50: #F0F4FF; --lv-tide-100: #DCE5FF; --lv-tide-200: #B7C9FF;
+  --lv-tide-300: #8AA8FF; --lv-tide-400: #5F86FF; --lv-tide-500: #3B63F2;
+  --lv-tide-600: #2B47C4; --lv-tide-700: #1F3291; --lv-tide-800: #172463;
+  /* Gold: yield. Coins, rates and earnings only. */
+  --lv-gold-100: #FFF6CF; --lv-gold-200: #FFE78A; --lv-gold-300: #FFD150;
+  --lv-gold-400: #FFB627; --lv-gold-500: #E8901C; --lv-gold-600: #A85A14;
+  --lv-gold-700: #8A4A12;
+  /* Aqua: water and flow (the channel). */
+  --lv-aqua-100: #D9FFFA; --lv-aqua-200: #9AF2EA; --lv-aqua-300: #5EDDE0;
+  --lv-aqua-400: #2FB4CB; --lv-aqua-500: #1E86A8; --lv-aqua-600: #155D80;
+  /* Stone: the aqueduct; light neutrals in illustration. */
+  --lv-stone-50: #FFFFFF; --lv-stone-100: #EEF1F7; --lv-stone-200: #D5DAE6;
+  --lv-stone-300: #AEB5C8; --lv-stone-400: #7C849C; --lv-stone-500: #4F566B;
+  /* Ink: dark neutrals. */
+  --lv-ink-950: #070A16; --lv-ink-900: #0B1022; --lv-ink-800: #121937;
+  --lv-ink-700: #1B2448; --lv-ink-600: #283363; --lv-ink-500: #3B4780;
+  --lv-ink-400: #6470A6; --lv-ink-300: #9AA3C7; --lv-ink-200: #C9CFE6;
+  --lv-ink-100: #E8EBF5;
+  /* Paper: light neutrals. */
+  --lv-paper-0: #FFFFFF; --lv-paper-50: #FAF8F4; --lv-paper-100: #F3F0E9;
+  --lv-paper-200: #E6E1D6; --lv-paper-300: #CFC8B9; --lv-paper-500: #6B6457;
+
+  /* ---------- Type ---------- */
+  --lv-font-display: "Pixelify Sans", ui-monospace, "SF Mono", Menlo, monospace;
+  --lv-font-ui: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --lv-font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --lv-weight-regular: 400; --lv-weight-medium: 500; --lv-weight-semibold: 600; --lv-weight-bold: 700;
+  --lv-text-display-xl: 4rem;        /* 64px  Pixelify Sans 600 / 1.0 */
+  --lv-text-display-lg: 3rem;        /* 48px  Pixelify Sans 600 / 1.05 */
+  --lv-text-display-md: 2rem;        /* 32px  Pixelify Sans 500 / 1.1 */
+  --lv-text-h1: 1.75rem;             /* 28px  Geist 600 / 1.2, -0.01em */
+  --lv-text-h2: 1.375rem;            /* 22px  Geist 600 / 1.3 */
+  --lv-text-h3: 1.125rem;            /* 18px  Geist 600 / 1.4 */
+  --lv-text-body: 1rem;              /* 16px  Geist 400 / 1.55 */
+  --lv-text-small: 0.875rem;         /* 14px  Geist 400 / 1.5 */
+  --lv-text-caption: 0.75rem;        /* 12px  Geist 500 / 1.4, +0.04em, uppercase */
+  --lv-text-figure-xl: 3rem;         /* 48px  Geist Mono 500, tabular-nums (headline APR) */
+  --lv-text-figure: 1.25rem;         /* 20px  Geist Mono 500, tabular-nums (balances) */
+  --lv-leading-tight: 1.05; --lv-leading-snug: 1.25; --lv-leading-body: 1.55;
+  --lv-tracking-display: 0.01em; --lv-tracking-tight: -0.01em; --lv-tracking-caption: 0.04em;
+
+  /* ---------- Space and shape (4px = one art pixel at 1x) ---------- */
+  --lv-px: 4px;
+  --lv-space-1: 4px; --lv-space-2: 8px; --lv-space-3: 12px; --lv-space-4: 16px;
+  --lv-space-6: 24px; --lv-space-8: 32px; --lv-space-12: 48px; --lv-space-16: 64px;
+  --lv-radius-0: 0; --lv-radius-1: 2px; --lv-radius-2: 4px;   /* square or near-square; no pills */
+  --lv-border-width: 2px;
+  /* Notched pixel corners for cards and buttons: clip-path: var(--lv-clip-pixel); */
+  --lv-clip-pixel: polygon(0 4px, 4px 4px, 4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%,
+    4px calc(100% - 4px), 0 calc(100% - 4px));
+  --lv-motion-step: steps(8, end);   /* pixel motion: move in whole art pixels */
+  --lv-motion-fast: 120ms; --lv-motion-base: 200ms;
+}
+
+/* ---------- Semantic: light (default). data-theme also scopes a subtree. ---------- */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  /* Surfaces */
+  --lv-bg: var(--lv-paper-50);                       /* page */
+  --lv-surface: var(--lv-paper-0);                   /* cards, inputs */
+  --lv-surface-2: var(--lv-paper-100);               /* wells, table stripes */
+  --lv-border: var(--lv-paper-200);                  /* decorative dividers */
+  --lv-border-strong: #857F71;                       /* input and control outlines, 3.8:1 on bg */
+  /* Text (contrast on --lv-bg) */
+  --lv-text: var(--lv-ink-900);                      /* 17.8:1 */
+  --lv-text-muted: #4A5274;                          /* 7.2:1 */
+  --lv-text-subtle: #5F6788;                         /* 5.2:1 */
+  --lv-text-warm: var(--lv-ember-700);               /* 7.4:1, source / Mezo */
+  --lv-text-cool: var(--lv-tide-600);                /* 7.1:1, home / Base, links */
+  --lv-text-yield: var(--lv-gold-700);               /* 6.5:1, APR and earnings */
+  --lv-text-success: #13795B;                        /* 5.1:1 */
+  --lv-text-danger: #C8102E;                         /* 5.6:1 */
+  /* Fills */
+  --lv-accent: var(--lv-tide-500);                   /* primary button */
+  --lv-accent-hover: var(--lv-tide-600);
+  --lv-on-accent: #FFFFFF;                           /* 4.9:1 on tide-500 */
+  --lv-warm: var(--lv-ember-500);                    /* warm fills; never for errors */
+  --lv-on-warm: var(--lv-ink-900);                   /* 5.6:1 */
+  --lv-yield: var(--lv-gold-400);                    /* yield chip */
+  --lv-on-yield: var(--lv-ink-900);                  /* 10.8:1 */
+  --lv-water: var(--lv-aqua-400);                    /* progress, flow lines */
+  --lv-focus: var(--lv-tide-500);                    /* focus ring, 4.7:1 on bg */
+  --lv-pixel-shadow: var(--lv-ink-900);              /* hard offset shadow colour */
+  --lv-shadow-pixel: 4px 4px 0 0 var(--lv-ink-900);  /* hard offset, no blur */
+  --lv-shadow-pixel-sm: 2px 2px 0 0 var(--lv-ink-900);
+  --lv-scene-sea: var(--lv-ink-900);                 /* sea colour behind scene.svg */
+}
+
+/* ---------- Semantic: dark ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    /* Surfaces */
+    --lv-bg: var(--lv-ink-900);
+    --lv-surface: var(--lv-ink-800);
+    --lv-surface-2: var(--lv-ink-700);
+    --lv-border: var(--lv-ink-600);
+    --lv-border-strong: #5D6AA8;                     /* 3.7:1 on bg */
+    /* Text (contrast on --lv-bg) */
+    --lv-text: var(--lv-stone-100);                  /* 16.7:1 */
+    --lv-text-muted: var(--lv-ink-300);              /* 7.6:1 */
+    --lv-text-subtle: #7D87B0;                       /* 5.4:1 (use on bg/surface, not surface-2) */
+    --lv-text-warm: var(--lv-ember-400);             /* 7.3:1 */
+    --lv-text-cool: var(--lv-tide-300);              /* 8.2:1 */
+    --lv-text-yield: var(--lv-gold-300);             /* 13.0:1 */
+    --lv-text-success: #5FD6A8;                      /* 10.5:1 */
+    --lv-text-danger: #FF7B86;                       /* 7.6:1 */
+    /* Fills */
+    --lv-accent: var(--lv-tide-500);
+    --lv-accent-hover: var(--lv-tide-400);
+    --lv-on-accent: #FFFFFF;                         /* 4.9:1 */
+    --lv-warm: var(--lv-ember-400);
+    --lv-on-warm: var(--lv-ink-900);                 /* 7.3:1 */
+    --lv-yield: var(--lv-gold-400);
+    --lv-on-yield: var(--lv-ink-900);                /* 10.8:1 */
+    --lv-water: var(--lv-aqua-300);
+    --lv-focus: var(--lv-tide-400);                  /* 5.7:1 on bg */
+    --lv-pixel-shadow: var(--lv-ink-950);
+    --lv-shadow-pixel: 4px 4px 0 0 var(--lv-ink-950);
+    --lv-shadow-pixel-sm: 2px 2px 0 0 var(--lv-ink-950);
+    --lv-scene-sea: var(--lv-ink-900);
+  }
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  /* Surfaces */
+  --lv-bg: var(--lv-ink-900);
+  --lv-surface: var(--lv-ink-800);
+  --lv-surface-2: var(--lv-ink-700);
+  --lv-border: var(--lv-ink-600);
+  --lv-border-strong: #5D6AA8;                       /* 3.7:1 on bg */
+  /* Text (contrast on --lv-bg) */
+  --lv-text: var(--lv-stone-100);                    /* 16.7:1 */
+  --lv-text-muted: var(--lv-ink-300);                /* 7.6:1 */
+  --lv-text-subtle: #7D87B0;                         /* 5.4:1 (use on bg/surface, not surface-2) */
+  --lv-text-warm: var(--lv-ember-400);               /* 7.3:1 */
+  --lv-text-cool: var(--lv-tide-300);                /* 8.2:1 */
+  --lv-text-yield: var(--lv-gold-300);               /* 13.0:1 */
+  --lv-text-success: #5FD6A8;                        /* 10.5:1 */
+  --lv-text-danger: #FF7B86;                         /* 7.6:1 */
+  /* Fills */
+  --lv-accent: var(--lv-tide-500);
+  --lv-accent-hover: var(--lv-tide-400);
+  --lv-on-accent: #FFFFFF;                           /* 4.9:1 */
+  --lv-warm: var(--lv-ember-400);
+  --lv-on-warm: var(--lv-ink-900);                   /* 7.3:1 */
+  --lv-yield: var(--lv-gold-400);
+  --lv-on-yield: var(--lv-ink-900);                  /* 10.8:1 */
+  --lv-water: var(--lv-aqua-300);
+  --lv-focus: var(--lv-tide-400);                    /* 5.7:1 on bg */
+  --lv-pixel-shadow: var(--lv-ink-950);
+  --lv-shadow-pixel: 4px 4px 0 0 var(--lv-ink-950);
+  --lv-shadow-pixel-sm: 2px 2px 0 0 var(--lv-ink-950);
+  --lv-scene-sea: var(--lv-ink-900);
+}
+
+/* ---------- Base ---------- */
+body { background: var(--lv-bg); color: var(--lv-text); font-family: var(--lv-font-ui); }
+.lv-figure { font-family: var(--lv-font-mono); font-variant-numeric: tabular-nums; }
+.lv-display { font-family: var(--lv-font-display); letter-spacing: var(--lv-tracking-display); }
+.lv-pixel-art, .lv-pixel-art img, .lv-pixel-art svg { image-rendering: pixelated; shape-rendering: crispEdges; }
+
