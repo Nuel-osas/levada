@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BaseError,
   ContractFunctionRevertedError,
@@ -60,6 +60,10 @@ export function SavePanel() {
   const { exits, refetch: refetchExits } = useExits();
 
   const [tab, setTab] = useState<Tab>("save");
+  // /app#withdraw (from the portfolio) opens on the Withdraw tab.
+  useEffect(() => {
+    if (location.hash === "#withdraw") setTab("withdraw");
+  }, []);
   const [amount, setAmount] = useState("");
   const [isMax, setIsMax] = useState(false);
   const [busy, setBusy] = useState<string>();

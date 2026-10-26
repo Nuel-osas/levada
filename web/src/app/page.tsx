@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { Balance } from "@/components/Balance";
-import { Connect } from "@/components/Connect";
 import { Experience } from "@/components/Experience";
-import { HeroTry } from "@/components/Faucet";
 import { FillLine } from "@/components/FillLine";
 import { Flow } from "@/components/Flow";
 import { HeroCanvas } from "@/components/HeroCanvas";
@@ -13,7 +11,6 @@ import { Marquee } from "@/components/Marquee";
 import { MobileBar } from "@/components/MobileBar";
 import { Preloader } from "@/components/Preloader";
 import { Questions } from "@/components/Questions";
-import { SavePanel } from "@/components/SavePanel";
 import { Stack } from "@/components/Stack";
 import { Steps } from "@/components/Steps";
 import { Trust } from "@/components/Trust";
@@ -57,7 +54,9 @@ export default function Home() {
           </nav>
           <div className="top__right">
             {NETWORK === "testnet" && <span className="chip chip--sm">Testnet</span>}
-            <Connect />
+            <Link className="btn-launch" href="/app" data-cursor="Open">
+              Launch app <span aria-hidden="true">↗</span>
+            </Link>
           </div>
         </div>
       </header>
@@ -90,14 +89,13 @@ export default function Home() {
                   no BTC for gas. Withdraw any time.
                 </p>
                 <div className="hero__actions" id="hero-actions">
-                  <a className="btn-round" href="#save" data-magnetic data-cursor="Save">
-                    <span>Start saving</span>
-                  </a>
+                  <Link className="btn-round" href="/app" data-magnetic data-cursor="Open">
+                    <span>Launch app</span>
+                  </Link>
                   <a className="btn-line" href="#how">
                     How it works <span aria-hidden="true">↓</span>
                   </a>
                 </div>
-                <HeroTry />
               </div>
               <HeroStats />
             </div>
@@ -123,8 +121,24 @@ export default function Home() {
               <div className="save__balance reveal">
                 <Balance />
               </div>
-              <div className="save__panel reveal" style={{ ["--i" as string]: 1 }}>
-                <SavePanel />
+              <div className="save__cta reveal" style={{ ["--i" as string]: 1 }}>
+                <p className="save__cta-k">The Levada app</p>
+                <p className="save__cta-title">
+                  Save, withdraw and track it all in <em>one place.</em>
+                </p>
+                <ul className="save__cta-list">
+                  <li>Deposit MUSD on {chainNames.base} in one signature</li>
+                  <li>Watch your savings tick up every second</li>
+                  <li>Follow every withdrawal home from Mezo</li>
+                </ul>
+                <div className="save__cta-actions">
+                  <Link className="btn-round" href="/app" data-magnetic data-cursor="Open">
+                    <span>Launch app</span>
+                  </Link>
+                  <Link className="btn-line" href="/portfolio">
+                    View portfolio →
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -172,9 +186,9 @@ export default function Home() {
         <div className="container">
           <div className="foot__cta">
             <Lines id="cta-title" className="foot__title" lines={[<>Every MUSD on Base,</>, <><em>earning</em> Mezo&apos;s rate.</>]} />
-            <a className="btn-round btn-round--lg" href="#save" data-magnetic data-cursor="Save">
-              <span>Start saving</span>
-            </a>
+            <Link className="btn-round btn-round--lg" href="/app" data-magnetic data-cursor="Open">
+              <span>Launch app</span>
+            </Link>
           </div>
           <nav className="foot__cols" aria-label="Footer">
             <div>
@@ -225,6 +239,8 @@ export default function Home() {
             </div>
             <div>
               <p className="foot__h">Levada</p>
+              <Link href="/app">App</Link>
+              <Link href="/portfolio">Portfolio</Link>
               <a href="https://github.com/Nuel-osas/levada" target="_blank" rel="noreferrer">
                 Code on GitHub ↗
               </a>

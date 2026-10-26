@@ -11,7 +11,6 @@ export function MobileBar() {
   useEffect(() => {
     const panel = document.getElementById("panel");
     const hero = document.getElementById("hero-actions");
-    if (!panel) return;
     let panelIn = false;
     let heroIn = true;
     const update = () => setHidden(panelIn || heroIn);
@@ -26,7 +25,7 @@ export function MobileBar() {
       },
       { threshold: [0, 0.2, 0.4] },
     );
-    io.observe(panel);
+    if (panel) io.observe(panel);
     if (hero) io.observe(hero);
     else heroIn = false;
     return () => io.disconnect();
@@ -39,9 +38,9 @@ export function MobileBar() {
         <span className="mbar__label">{mine ? "Your savings · estimate" : "Mezo savings rate"}</span>
         <span className="mbar__num">{mine ? `${fmt(s.mine, 6)} MUSD` : `${fmtPct(s.apy?.apy)} a year`}</span>
       </div>
-      <a className="btn-primary btn-primary--sm" href="#save" tabIndex={hidden ? -1 : 0}>
-        <span className="btn-primary__label" data-label="Save">
-          Save
+      <a className="btn-primary btn-primary--sm" href="/app" tabIndex={hidden ? -1 : 0}>
+        <span className="btn-primary__label" data-label="Launch app">
+          Launch app
         </span>
       </a>
     </div>
