@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Lockup } from "@/components/Lockup";
 import { StatusBoard } from "@/components/StatusBoard";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { BRAND, NETWORK } from "@/lib/config";
 import { getStatus } from "@/lib/status";
 
@@ -28,7 +27,6 @@ export default async function StatusPage() {
           </nav>
           <div className="top__right">
             {NETWORK === "testnet" && <span className="chip chip--sm">Testnet</span>}
-            <ThemeToggle />
           </div>
         </div>
       </header>

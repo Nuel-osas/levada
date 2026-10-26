@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import { BRAND, NETWORK } from "@/lib/config";
 import { getApy } from "@/lib/apy";
@@ -10,6 +10,7 @@ import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
+const serif = Instrument_Serif({ subsets: ["latin"], variable: "--font-instrument", weight: "400", style: ["normal", "italic"], display: "swap" });
 
 const site = process.env.NEXT_PUBLIC_SITE_URL
   ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3200");
@@ -35,22 +36,17 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
-    { media: "(prefers-color-scheme: dark)", color: "#070A14" },
-  ],
-};
+export const viewport: Viewport = { themeColor: "#06070A", colorScheme: "dark" };
 
-/* Resolve day or night before first paint: ?theme= (for sharing), then the saved choice, then the system. */
-const themeScript = `(function(){try{var d=document.documentElement,q=new URLSearchParams(location.search).get("theme"),s=null;try{s=localStorage.getItem("levada-theme")}catch(e){}var t=q==="dark"||q==="light"?q:s==="dark"||s==="light"?s:matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t;d.classList.add("js")}catch(e){}})();`;
+/* Marks the page as scripted (CSS hides reveal targets only then). One theme: dark. */
+const themeScript = `document.documentElement.classList.add("js")`;
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const [apy, market] = await Promise.all([getApy(), getMarket()]);
   // Whether the test-MUSD faucet has a key (a boolean only; the key never leaves the server).
   const faucet = NETWORK === "testnet" && !!faucetKey();
   return (
-    <html lang="en" className={`${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="dark" className={`${geist.variable} ${geistMono.variable} ${serif.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

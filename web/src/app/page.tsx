@@ -1,35 +1,50 @@
 import Link from "next/link";
 import { Balance } from "@/components/Balance";
 import { Connect } from "@/components/Connect";
+import { Experience } from "@/components/Experience";
 import { HeroTry } from "@/components/Faucet";
 import { FillLine } from "@/components/FillLine";
 import { Flow } from "@/components/Flow";
-import { HeroCard } from "@/components/HeroCard";
+import { HeroCanvas } from "@/components/HeroCanvas";
+import { HeroStats } from "@/components/HeroCard";
 import { RateSource } from "@/components/HeroRate";
-import { Icon } from "@/components/Icon";
-import { Lockup } from "@/components/Lockup";
-import { MezoStrip } from "@/components/MezoStrip";
+import { Lockup, Mark } from "@/components/Lockup";
+import { Marquee } from "@/components/Marquee";
 import { MobileBar } from "@/components/MobileBar";
+import { Preloader } from "@/components/Preloader";
 import { Questions } from "@/components/Questions";
-import { Reveal } from "@/components/Reveal";
 import { SavePanel } from "@/components/SavePanel";
 import { Stack } from "@/components/Stack";
 import { Steps } from "@/components/Steps";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Trust } from "@/components/Trust";
 import { BRAND, NETWORK, addresses, chainNames, links, mezoLinks } from "@/lib/config";
 
 export const revalidate = 600;
 
+/** A heading whose lines rise out of a mask, one after another, when it enters the screen. */
+function Lines({ lines, className, as: Tag = "h2", id }: { lines: React.ReactNode[]; className?: string; as?: "h1" | "h2"; id?: string }) {
+  return (
+    <Tag id={id} className={`lines ${className ?? ""}`}>
+      {lines.map((l, i) => (
+        <span key={i} className="line">
+          <span style={{ ["--i" as string]: i }}>{l}</span>
+        </span>
+      ))}
+    </Tag>
+  );
+}
+
 export default function Home() {
   return (
     <>
+      <Preloader />
       <a className="skip" href="#save">
         Skip to Save
       </a>
+      <div className="grain" aria-hidden="true" />
 
       <header className="top">
-        <div className="container top__in">
+        <div className="top__in">
           <a className="top__brand" href="#top" aria-label="Levada, back to top">
             <Lockup size={30} />
           </a>
@@ -42,7 +57,6 @@ export default function Home() {
           </nav>
           <div className="top__right">
             {NETWORK === "testnet" && <span className="chip chip--sm">Testnet</span>}
-            <ThemeToggle />
             <Connect />
           </div>
         </div>
@@ -50,52 +64,63 @@ export default function Home() {
 
       <main id="top">
         <section className="hero" aria-labelledby="hero-title">
-          <div className="hero__bg" aria-hidden="true" />
-          <div className="container hero__in">
-            <div className="hero__copy">
-              <p className="pill">
-                <span className="pill__dot" aria-hidden="true" />
-                Built on Mezo · Live on {chainNames.base}
-              </p>
-              <h1 id="hero-title" className="hero__title">
-                Mezo&apos;s savings rate, <span className="t-grad">now on Base.</span>
-              </h1>
-              <p className="hero__lede">
-                Deposit MUSD on Base and earn yield paid by Bitcoin borrowers. One deposit, no bridging by hand, no BTC
-                for gas. Withdraw any time.
-              </p>
-              <div className="hero__actions" id="hero-actions">
-                <a className="btn-primary" href="#save">
-                  Start saving <Icon name="arrow" size={18} />
-                </a>
-                <a className="btn-ghost" href="#how">
-                  How it works
-                </a>
+          <HeroCanvas />
+          <div className="hero__fade" aria-hidden="true" />
+          <div className="hero__in">
+            <p className="hero__kicker">
+              <span className="live-dot" aria-hidden="true" /> Built on Mezo · Live on {chainNames.base}
+            </p>
+            <h1 id="hero-title" className="hero__title">
+              <span className="line">
+                <span style={{ ["--i" as string]: 0 }}>Mezo&apos;s savings</span>
+              </span>
+              <span className="line">
+                <span style={{ ["--i" as string]: 1 }}>
+                  rate, <em>now on</em>
+                </span>
+              </span>
+              <span className="line">
+                <span style={{ ["--i" as string]: 2 }}>Base.</span>
+              </span>
+            </h1>
+            <div className="hero__foot">
+              <div className="hero__copy">
+                <p className="hero__lede">
+                  Deposit MUSD on Base. Earn yield paid by Bitcoin borrowers on Mezo. One signature, no bridging by hand,
+                  no BTC for gas. Withdraw any time.
+                </p>
+                <div className="hero__actions" id="hero-actions">
+                  <a className="btn-round" href="#save" data-magnetic data-cursor="Save">
+                    <span>Start saving</span>
+                  </a>
+                  <a className="btn-line" href="#how">
+                    How it works <span aria-hidden="true">↓</span>
+                  </a>
+                </div>
+                <HeroTry />
               </div>
-              <HeroTry />
-              <p className="hero__source">
-                <RateSource />
-              </p>
+              <HeroStats />
             </div>
-            <HeroCard />
+            <p className="hero__source">
+              <RateSource />
+            </p>
           </div>
-          <MezoStrip />
         </section>
 
-        <Flow />
+        <Marquee />
 
         <FillLine />
 
+        <Flow />
+
         <section className="save-sec" id="save" aria-labelledby="save-title">
           <div className="container">
-            <header className="section-head section-head--center reveal">
+            <header className="section-head">
               <p className="eyebrow">Save</p>
-              <h2 id="save-title" className="h2">
-                Put idle MUSD to work. <span className="t-muted">Take it back whenever.</span>
-              </h2>
+              <Lines id="save-title" className="h2" lines={[<>Put idle MUSD</>, <>to <em>work.</em></>]} />
             </header>
             <div className="save">
-              <div className="save__balance card reveal">
+              <div className="save__balance reveal">
                 <Balance />
               </div>
               <div className="save__panel reveal" style={{ ["--i" as string]: 1 }}>
@@ -107,90 +132,49 @@ export default function Home() {
 
         <section className="sec" id="how" aria-labelledby="how-title">
           <div className="container">
-            <header className="section-head reveal">
+            <header className="section-head">
               <p className="eyebrow">How it works</p>
-              <h2 id="how-title" className="h2">
-                You save and withdraw. <span className="t-muted">A keeper does the rest.</span>
-              </h2>
-              <p className="section-head__lede">
-                Every keeper step is permissionless. Anyone can run it, and it only ever pays gas.
-              </p>
+              <Lines id="how-title" className="h2" lines={[<>You save and withdraw.</>, <><em>A keeper</em> does the rest.</>]} />
             </header>
             <Steps />
           </div>
         </section>
 
-        <section className="sec sec--soft" id="stack" aria-labelledby="stack-title">
-          <div className="container">
-            <header className="section-head reveal">
-              <p className="eyebrow">Built on Mezo</p>
-              <h2 id="stack-title" className="h2">
-                Made from Mezo&apos;s own parts. <span className="t-muted">Ready for the rest of DeFi.</span>
-              </h2>
-              <p className="section-head__lede">
-                Levada doesn&apos;t compete with Mezo. It extends the MUSD Savings Rate to every MUSD holder on Base, and
-                hands back a token other protocols can build on.
-              </p>
-            </header>
-            <Stack />
-          </div>
+        <section id="stack" aria-labelledby="stack-title">
+          <Stack />
         </section>
 
         <section className="sec" id="proof" aria-labelledby="proof-title">
           <div className="container">
-            <header className="section-head reveal">
+            <header className="section-head">
               <p className="eyebrow">Security</p>
-              <h2 id="proof-title" className="h2">
-                Don&apos;t trust the page. <span className="t-muted">Check the contracts.</span>
-              </h2>
+              <Lines id="proof-title" className="h2" lines={[<>Don&apos;t trust the page.</>, <><em>Check</em> the contracts.</>]} />
             </header>
             <Trust />
           </div>
         </section>
 
-        <section className="sec sec--soft" id="questions" aria-labelledby="q-title">
+        <section className="sec" id="questions" aria-labelledby="q-title">
           <div className="container faq">
-            <header className="section-head faq__head reveal">
+            <header className="section-head faq__head">
               <p className="eyebrow">FAQ</p>
-              <h2 id="q-title" className="h2">
-                Fair questions, short answers.
-              </h2>
-              <p className="section-head__lede">
-                Something else? Every figure on this page is read live. See the <Link href="/status">status page</Link>.
-              </p>
+              <Lines id="q-title" className="h2" lines={[<>Fair questions,</>, <><em>short</em> answers.</>]} />
             </header>
             <div className="reveal">
               <Questions />
             </div>
           </div>
         </section>
-
-        <section className="cta-sec" aria-labelledby="cta-title">
-          <div className="container">
-            <div className="cta" data-theme="dark">
-              <div className="cta__glow" aria-hidden="true" />
-              <h2 id="cta-title" className="cta__title">
-                Every MUSD on Base, <span className="t-grad">earning Mezo&apos;s rate.</span>
-              </h2>
-              <p className="cta__lede">One deposit. Yield from Bitcoin borrowers. Withdraw any time.</p>
-              <div className="hero__actions">
-                <a className="btn-primary" href="#save">
-                  Start saving <Icon name="arrow" size={18} />
-                </a>
-                <a className="btn-ghost" href="https://github.com/Nuel-osas/levada" target="_blank" rel="noreferrer">
-                  Read the code ↗
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
 
-      <footer className="foot">
-        <div className="container foot__in">
-          <div className="foot__brand">
-            <Lockup size={30} />
-            <p>{BRAND.tagline}</p>
+      <footer className="foot" aria-labelledby="cta-title">
+        <div className="foot__glow" aria-hidden="true" />
+        <div className="container">
+          <div className="foot__cta">
+            <Lines id="cta-title" className="foot__title" lines={[<>Every MUSD on Base,</>, <><em>earning</em> Mezo&apos;s rate.</>]} />
+            <a className="btn-round btn-round--lg" href="#save" data-magnetic data-cursor="Save">
+              <span>Start saving</span>
+            </a>
           </div>
           <nav className="foot__cols" aria-label="Footer">
             <div>
@@ -240,24 +224,30 @@ export default function Home() {
               </a>
             </div>
             <div>
-              <p className="foot__h">Page</p>
-              <a href="#how">How it works</a>
+              <p className="foot__h">Levada</p>
+              <a href="https://github.com/Nuel-osas/levada" target="_blank" rel="noreferrer">
+                Code on GitHub ↗
+              </a>
+              <Link href="/status">Status</Link>
               <a href="#proof">Security</a>
               <a href="#questions">FAQ</a>
-              <Link href="/status">Status</Link>
             </div>
           </nav>
         </div>
+        <div className="foot__word" aria-hidden="true">
+          <Mark size={220} className="foot__mark" />
+          <span>levada</span>
+        </div>
         <div className="container foot__base">
+          <span>{BRAND.tagline} Built for the Mezo Buildathon on AKINDO.</span>
           <span>
-            Built for the Mezo Buildathon on AKINDO.{NETWORK === "testnet" && " Testnet only: test MUSD has no value."}
+            {NETWORK === "testnet" && "Testnet only: test MUSD has no value. "}Not affiliated with Mezo, Base or Wormhole.
           </span>
-          <span>Not affiliated with Mezo, Base or Wormhole.</span>
         </div>
       </footer>
 
       <MobileBar />
-      <Reveal />
+      <Experience />
     </>
   );
 }

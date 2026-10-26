@@ -1,123 +1,54 @@
 /* ==========================================================================
-   Levada brand tokens  ·  v2.0  ·  2026-10-26
-   Clean fintech identity for "Mezo's savings rate, on Base."
-   Light is the default. Dark applies with prefers-color-scheme: dark (unless
-   <html data-theme="light">) or with <html data-theme="dark">.
+   Levada brand tokens  ·  v3.0  ·  2026-10-26
+   Dark editorial identity for "Mezo's savings rate, now on Base."
+   One theme: near-black, warm off-white type, ember (Mezo) and tide (Base).
    ========================================================================== */
 
 :root {
-  /* ---------- Primitives ---------- */
-  /* Ember: the source side (Bitcoin / Mezo). Accents and the logo gradient only. */
-  --lv-ember-400: #FF9A4D; --lv-ember-500: #FF7A1A; --lv-ember-600: #E2620A;
-  /* Tide: the home side (Base). Primary actions and links. */
-  --lv-tide-50: #F0F3FF; --lv-tide-100: #E1E7FF; --lv-tide-300: #8FA4FF; --lv-tide-400: #6F8BFF;
-  --lv-tide-500: #3D63FF; --lv-tide-600: #2C4FE6; --lv-tide-700: #213CB8;
-  /* Yield: earnings and rates. */
-  --lv-yield-400: #34D399; --lv-yield-500: #10B981; --lv-yield-600: #0E9F6E; --lv-yield-700: #047857;
-  /* Gold: the coin. Sparing. */
-  --lv-gold-400: #FFC53D;
-  /* Ink and neutrals. */
-  --lv-ink-950: #070A14; --lv-ink-900: #0A0F1F; --lv-ink-800: #111729; --lv-ink-700: #1A2135;
-  --lv-ink-600: #262E45; --lv-ink-500: #3A4360; --lv-ink-400: #5B6478; --lv-ink-300: #8A93A6;
-  --lv-ink-200: #C7CCD8; --lv-ink-100: #E6E9F0; --lv-ink-50: #F5F7FB; --lv-white: #FFFFFF;
-
-  /* ---------- Type ---------- */
-  --lv-font-display: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --lv-font-ui: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --lv-font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  --lv-tracking-display: -0.045em; --lv-tracking-tight: -0.02em;
-
-  /* ---------- Shape ---------- */
-  --lv-radius-sm: 10px; --lv-radius: 16px; --lv-radius-lg: 24px; --lv-radius-xl: 32px; --lv-radius-pill: 999px;
-  --lv-gradient: linear-gradient(90deg, var(--lv-ember-500), var(--lv-tide-500));
-  --lv-motion-fast: 140ms; --lv-motion-base: 240ms;
-}
-
-/* ---------- Semantic: light (default) ---------- */
-:root, [data-theme="light"] {
-  color-scheme: light;
-  --lv-bg: var(--lv-white);
-  --lv-bg-soft: var(--lv-ink-50);
-  --lv-surface: var(--lv-white);
-  --lv-surface-2: var(--lv-ink-50);
-  --lv-border: var(--lv-ink-100);
-  --lv-border-strong: var(--lv-ink-200);
-  --lv-text: var(--lv-ink-900);
-  --lv-text-muted: #4A5368;
-  --lv-text-subtle: #6B7488;
-  --lv-text-warm: var(--lv-ember-600);
-  --lv-text-cool: var(--lv-tide-600);
-  --lv-text-yield: var(--lv-yield-700);
-  --lv-text-success: var(--lv-yield-700);
-  --lv-text-danger: #D92D20;
-  --lv-accent: var(--lv-tide-500);
-  --lv-accent-hover: var(--lv-tide-600);
-  --lv-accent-soft: var(--lv-tide-50);
-  --lv-on-accent: #FFFFFF;
-  --lv-yield-soft: #E7F8F1;
-  --lv-focus: var(--lv-tide-500);
-  --lv-shadow-sm: 0 1px 2px rgb(10 15 31 / 0.06);
-  --lv-shadow: 0 1px 2px rgb(10 15 31 / 0.04), 0 8px 24px -8px rgb(10 15 31 / 0.10);
-  --lv-shadow-lg: 0 2px 4px rgb(10 15 31 / 0.04), 0 24px 64px -16px rgb(10 15 31 / 0.18);
-}
-
-/* ---------- Semantic: dark ---------- */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-    --lv-bg: var(--lv-ink-950);
-    --lv-bg-soft: #0B1020;
-    --lv-surface: var(--lv-ink-800);
-    --lv-surface-2: var(--lv-ink-700);
-    --lv-border: #1F2740;
-    --lv-border-strong: #2E3756;
-    --lv-text: #F2F4F8;
-    --lv-text-muted: #A3ABBF;
-    --lv-text-subtle: #8189A0;
-    --lv-text-warm: var(--lv-ember-400);
-    --lv-text-cool: var(--lv-tide-300);
-    --lv-text-yield: var(--lv-yield-400);
-    --lv-text-success: var(--lv-yield-400);
-    --lv-text-danger: #FF7B72;
-    --lv-accent: var(--lv-tide-500);
-    --lv-accent-hover: var(--lv-tide-400);
-    --lv-accent-soft: rgb(61 99 255 / 0.14);
-    --lv-on-accent: #FFFFFF;
-    --lv-yield-soft: rgb(52 211 153 / 0.12);
-    --lv-focus: var(--lv-tide-400);
-    --lv-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
-    --lv-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -8px rgb(0 0 0 / 0.5);
-    --lv-shadow-lg: 0 2px 4px rgb(0 0 0 / 0.3), 0 24px 64px -16px rgb(0 0 0 / 0.6);
-  }
-}
-
-[data-theme="dark"] {
   color-scheme: dark;
+
+  /* ---------- Primitives ---------- */
+  --lv-ember-300: #FF9466; --lv-ember-400: #FF7440; --lv-ember-500: #FF5A1F; --lv-ember-600: #E04410;
+  --lv-tide-300: #A3B5FF; --lv-tide-400: #6F8BFF; --lv-tide-500: #3D63FF; --lv-tide-600: #2C4FE6;
+  --lv-mint-300: #B7F7D6; --lv-mint-400: #8EF0BE; --lv-mint-500: #5FE3A1;
+  --lv-gold-400: #FFC53D;
+  --lv-ink-1000: #030406; --lv-ink-950: #06070A; --lv-ink-900: #0B0D12; --lv-ink-800: #12151C;
+  --lv-ink-700: #1A1E27; --lv-ink-600: #252A35;
+  --lv-bone-50: #F4F1EA; --lv-bone-100: #ECE9E2; --lv-bone-300: #B9B6AF; --lv-bone-500: #8C8F99; --lv-bone-700: #5D606A;
+
+  /* ---------- Semantic ---------- */
   --lv-bg: var(--lv-ink-950);
-  --lv-bg-soft: #0B1020;
-  --lv-surface: var(--lv-ink-800);
-  --lv-surface-2: var(--lv-ink-700);
-  --lv-border: #1F2740;
-  --lv-border-strong: #2E3756;
-  --lv-text: #F2F4F8;
-  --lv-text-muted: #A3ABBF;
-  --lv-text-subtle: #8189A0;
+  --lv-bg-soft: var(--lv-ink-900);
+  --lv-surface: var(--lv-ink-900);
+  --lv-surface-2: var(--lv-ink-800);
+  --lv-border: rgb(236 233 226 / 0.09);
+  --lv-border-strong: rgb(236 233 226 / 0.18);
+  --lv-text: var(--lv-bone-100);
+  --lv-text-muted: var(--lv-bone-300);
+  --lv-text-subtle: var(--lv-bone-500);
   --lv-text-warm: var(--lv-ember-400);
   --lv-text-cool: var(--lv-tide-300);
-  --lv-text-yield: var(--lv-yield-400);
-  --lv-text-success: var(--lv-yield-400);
-  --lv-text-danger: #FF7B72;
-  --lv-accent: var(--lv-tide-500);
-  --lv-accent-hover: var(--lv-tide-400);
-  --lv-accent-soft: rgb(61 99 255 / 0.14);
-  --lv-on-accent: #FFFFFF;
-  --lv-yield-soft: rgb(52 211 153 / 0.12);
-  --lv-focus: var(--lv-tide-400);
-  --lv-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
-  --lv-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -8px rgb(0 0 0 / 0.5);
-  --lv-shadow-lg: 0 2px 4px rgb(0 0 0 / 0.3), 0 24px 64px -16px rgb(0 0 0 / 0.6);
+  --lv-text-yield: var(--lv-mint-400);
+  --lv-text-success: var(--lv-mint-400);
+  --lv-text-danger: #FF6B5E;
+  --lv-accent: var(--lv-ember-500);
+  --lv-accent-hover: var(--lv-ember-400);
+  --lv-accent-soft: rgb(255 90 31 / 0.12);
+  --lv-on-accent: var(--lv-ink-1000);
+  --lv-yield-soft: rgb(142 240 190 / 0.10);
+  --lv-focus: var(--lv-ember-400);
+
+  /* ---------- Type ---------- */
+  --lv-font-ui: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --lv-font-serif: "Instrument Serif", "Times New Roman", serif;
+  --lv-font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* ---------- Shape and motion ---------- */
+  --lv-radius-sm: 10px; --lv-radius: 16px; --lv-radius-lg: 24px; --lv-radius-xl: 32px; --lv-radius-pill: 999px;
+  --lv-gradient: linear-gradient(90deg, var(--lv-ember-500), var(--lv-tide-500));
+  --lv-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --lv-ease-in-out: cubic-bezier(0.83, 0, 0.17, 1);
 }
 
-/* ---------- Base ---------- */
 body { background: var(--lv-bg); color: var(--lv-text); font-family: var(--lv-font-ui); }
 .lv-figure { font-family: var(--lv-font-mono); font-variant-numeric: tabular-nums; }

@@ -1,53 +1,28 @@
 "use client";
 
-import { BRAND, LAUNCH } from "@/lib/config";
-import { fmtPct, fmtUsdShort } from "@/lib/format";
-import { netRate, useApy } from "@/lib/hooks";
-import { Icon } from "./Icon";
+import { LAUNCH } from "@/lib/config";
+import { fmt, fmtPct, fmtUsdShort } from "@/lib/format";
+import { netRate, useApy, useMarket } from "@/lib/hooks";
 
-/** The hero's right side: today's rate, the route MUSD takes, and the three promises. */
-export function HeroCard() {
+/** The hero's live figures: Mezo's rate, what reaches a saver, and the market Levada serves. */
+export function HeroStats() {
   const apy = useApy();
+  const supply = useMarket()?.baseMusd;
   const net = netRate(apy?.apy, LAUNCH.feeBps, LAUNCH.bufferBps);
+  const stats = [
+    { k: "sMUSD rate on Mezo", v: fmtPct(apy?.apy), tone: "yield" },
+    { k: "To you, after fees", v: fmtPct(net === undefined ? undefined : net * 100) },
+    { k: "Saved in sMUSD", v: fmtUsdShort(apy?.tvlUsd) },
+    { k: "MUSD idle on Base", v: supply ? fmt(supply.supply, 0) : "–" },
+  ];
   return (
-    <div className="hcard" aria-label="Today's rate and how Levada routes your MUSD">
-      <div className="hcard__glow" aria-hidden="true" />
-      <div className="hcard__panel">
-        <div className="hcard__rate">
-          <p className="hcard__label">sMUSD savings rate on Mezo</p>
-          <p className="hcard__num">{fmtPct(apy?.apy)}</p>
-          <p className="hcard__sub">
-            ≈ <b>{fmtPct(net === undefined ? undefined : net * 100)}</b> to you after fees
-            {apy?.tvlUsd ? ` · ${fmtUsdShort(apy.tvlUsd)} saved on Mezo` : ""}
-          </p>
+    <dl className="hstats">
+      {stats.map((s) => (
+        <div key={s.k} className="hstats__item">
+          <dt>{s.k}</dt>
+          <dd className={s.tone === "yield" ? "t-yield" : undefined}>{s.v}</dd>
         </div>
-
-        <ol className="route" aria-label="Route">
-          <li className="route__node route__node--cool">
-            <span className="route__chain">Base</span>
-            <span className="route__asset">MUSD → {BRAND.token}</span>
-          </li>
-          <li className="route__link" aria-hidden="true">
-            <span className="route__line" />
-            <span className="route__tag">Wormhole NTT</span>
-          </li>
-          <li className="route__node route__node--warm">
-            <span className="route__chain">Mezo</span>
-            <span className="route__asset">sMUSD</span>
-          </li>
-        </ol>
-
-        <ul className="hcard__checks">
-          {["No bridging by hand", "No BTC for gas", "Withdraw any time"].map((t) => (
-            <li key={t}>
-              <span className="hcard__tick" aria-hidden="true">
-                <Icon name="review" size={14} />
-              </span>
-              {t}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+      ))}
+    </dl>
   );
 }
