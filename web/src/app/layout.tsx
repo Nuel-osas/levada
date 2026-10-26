@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif, Unbounded } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import { BRAND, NETWORK } from "@/lib/config";
 import { getApy } from "@/lib/apy";
@@ -10,6 +10,7 @@ import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
+const display = Unbounded({ subsets: ["latin"], variable: "--font-unbounded", weight: ["400", "500", "600", "700"], display: "swap" });
 const serif = Instrument_Serif({ subsets: ["latin"], variable: "--font-instrument", weight: "400", style: ["normal", "italic"], display: "swap" });
 
 const site = process.env.NEXT_PUBLIC_SITE_URL
@@ -46,7 +47,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   // Whether the test-MUSD faucet has a key (a boolean only; the key never leaves the server).
   const faucet = NETWORK === "testnet" && !!faucetKey();
   return (
-    <html lang="en" data-theme="dark" className={`${geist.variable} ${geistMono.variable} ${serif.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="dark" className={`${geist.variable} ${geistMono.variable} ${serif.variable} ${display.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
