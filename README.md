@@ -1,4 +1,4 @@
-<p align="center"><img src="brand/lockup.svg" alt="Levada" width="320"></p>
+<p align="center"><img src="brand/logo.svg" alt="Levada" width="284"></p>
 
 <p align="center"><b>Mezo's savings rate, on Base.</b></p>
 
@@ -38,7 +38,7 @@ A keeper relays signed messages and pays out queued exits. **Every one of its ac
 | [`contracts/`](contracts) | `LevadaVault` (Base), `LevadaHub` (Mezo), Foundry tests, audit suite, deploy scripts |
 | [`keeper/`](keeper) | TypeScript keeper (viem). `npm run once` runs one pass; [`.github/workflows/keeper.yml`](.github/workflows/keeper.yml) runs it every 5 minutes |
 | [`web/`](web) | Next.js app: save, withdraw, live view of where every MUSD is |
-| [`brand/`](brand) | Isometric pixel identity: logo, scene, tokens |
+| [`brand/`](brand) | Logo, colours and tokens (the first pixel identity is in `brand/pixel-v1/`) |
 | [`deployments/`](deployments) | Network addresses (Mezo, Base, Wormhole NTT, sMUSD) and our deployments |
 | [`SECURITY.md`](SECURITY.md) | Trust model, guarantees, audit findings and fixes |
 

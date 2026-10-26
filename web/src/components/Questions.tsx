@@ -4,9 +4,9 @@ import { useState, type ReactNode } from "react";
 import { DEPLOYED, mezoLinks } from "@/lib/config";
 import { fmtPct, fmtShort, toNum } from "@/lib/format";
 import { useApy, useFlows, useHub, useVault } from "@/lib/hooks";
-import { PixelIcon, type GlyphName } from "./PixelIcon";
 
-type Item = { q: string; icon: GlyphName; a: ReactNode; note: string; links?: { label: string; href: string }[] };
+
+type Item = { q: string; a: ReactNode; note: string; links?: { label: string; href: string }[] };
 
 /** The questions a first-time visitor actually has, each answered in one line. */
 export function Questions() {
@@ -14,7 +14,7 @@ export function Questions() {
   const vault = useVault();
   const hub = useHub();
   const flows = useFlows(vault, hub);
-  const [open, setOpen] = useState(0);
+  const [open, setOpen] = useState<number | null>(0);
 
   const onMezo = toNum(flows?.onMezo) ?? 0;
   const buffer = toNum(flows?.buffer) ?? 0;
@@ -24,7 +24,6 @@ export function Questions() {
   const items: Item[] = [
     {
       q: "Where is my money right now?",
-      icon: "pin",
       a: live ? (
         <>
           Right now <mark>{Math.round((onMezo / total) * 100)}%</mark> of it earns on Mezo. The rest waits on Base for
@@ -39,7 +38,6 @@ export function Questions() {
     },
     {
       q: "Do I ever need to go to Mezo?",
-      icon: "home",
       a: (
         <>
           No. Your yield lands on Base. <mark>Nothing to claim on Mezo.</mark>
@@ -49,7 +47,6 @@ export function Questions() {
     },
     {
       q: "Who pays the interest?",
-      icon: "coin",
       a: (
         <>
           <mark>Bitcoin borrowers.</mark> They borrow MUSD against BTC on Mezo, and their fees fund Mezo&apos;s savings
@@ -60,7 +57,6 @@ export function Questions() {
     },
     {
       q: "Can I get it back today?",
-      icon: "clock",
       a:
         live && buffer > 0 ? (
           <>
@@ -77,7 +73,6 @@ export function Questions() {
     },
     {
       q: "What if the bridge is slow?",
-      icon: "hourglass",
       a: (
         <>
           Your amount is <mark>locked in</mark> the moment you ask, so waiting never shrinks it. Exits are paid in order.
@@ -87,7 +82,6 @@ export function Questions() {
     },
     {
       q: "Already on Mezo?",
-      icon: "signpost",
       a: (
         <>
           Use Mezo&apos;s own <mark>MUSD Savings Vault</mark>. Levada is for MUSD that lives on Base.
@@ -103,35 +97,32 @@ export function Questions() {
   ];
 
   return (
-    <div className="qa" style={{ ["--rows" as string]: items.length }}>
+    <div className="qa">
       {items.map((it, i) => (
-        <div className="qa__item" key={it.q}>
+        <div className={open === i ? "qa__item is-open" : "qa__item"} key={it.q}>
           <button
             type="button"
             className="qa__q"
             id={`q-${i}`}
             aria-expanded={open === i}
             aria-controls={`a-${i}`}
-            onClick={() => setOpen(i)}
-            style={{ ["--row" as string]: i + 1 }}
+            onClick={() => setOpen(open === i ? null : i)}
           >
-            <PixelIcon name={it.icon} scale={2} className="qa__icon" />
             <span>{it.q}</span>
+            <span className="qa__plus" aria-hidden="true" />
           </button>
           <div className="qa__a" id={`a-${i}`} role="region" aria-labelledby={`q-${i}`} hidden={open !== i}>
             <p className="qa__big">{it.a}</p>
-            <div className="qa__foot">
-              {it.links && (
-                <p className="qa__links">
-                  {it.links.map((l) => (
-                    <a key={l.label} href={l.href} target="_blank" rel="noreferrer">
-                      {l.label} ↗
-                    </a>
-                  ))}
-                </p>
-              )}
-              <p className="qa__note">{it.note}</p>
-            </div>
+            <p className="qa__note">{it.note}</p>
+            {it.links && (
+              <p className="qa__links">
+                {it.links.map((l) => (
+                  <a key={l.label} href={l.href} target="_blank" rel="noreferrer">
+                    {l.label} ↗
+                  </a>
+                ))}
+              </p>
+            )}
           </div>
         </div>
       ))}

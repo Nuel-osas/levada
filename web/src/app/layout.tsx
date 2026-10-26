@@ -1,17 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Pixelify_Sans } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import { BRAND, NETWORK } from "@/lib/config";
 import { getApy } from "@/lib/apy";
 import { getMarket } from "@/lib/market";
 import { faucetKey } from "@/lib/faucet-key";
 import "./tokens.css";
-import "./scene-motion.css";
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
-const pixel = Pixelify_Sans({ subsets: ["latin"], variable: "--font-pixelify", weight: ["500", "600"], display: "swap" });
 
 const site = process.env.NEXT_PUBLIC_SITE_URL
   ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3200");
@@ -25,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${BRAND.name} · ${BRAND.tagline}`,
     description,
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Levada: Mezo's savings rate, on Base." }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Levada: Mezo's savings rate, now on Base." }],
   },
   twitter: { card: "summary_large_image", images: ["/og.png"] },
   icons: {
@@ -39,8 +37,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FAF8F4" },
-    { media: "(prefers-color-scheme: dark)", color: "#0B1022" },
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#070A14" },
   ],
 };
 
@@ -52,7 +50,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   // Whether the test-MUSD faucet has a key (a boolean only; the key never leaves the server).
   const faucet = NETWORK === "testnet" && !!faucetKey();
   return (
-    <html lang="en" className={`${geist.variable} ${geistMono.variable} ${pixel.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

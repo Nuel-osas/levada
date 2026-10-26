@@ -14,11 +14,10 @@ import { useAccount, usePublicClient, useReadContract, useSwitchChain, useWriteC
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { BRAND, DEPLOYED, addresses, baseChain, chainNames, links } from "@/lib/config";
 import { erc20Abi, vaultAbi } from "@/lib/abis";
-import { fmt, fmtMusd, fmtPct, fmtShort, parseAmount, toNum } from "@/lib/format";
+import { fmt, fmtMusd, fmtPct, parseAmount, toNum } from "@/lib/format";
 import { netRate, rememberExit, useApy, useExits, useHub, useVault, type ExitView } from "@/lib/hooks";
 import { Exits } from "./Exits";
 import { FaucetAction } from "./Faucet";
-import { sceneEvent } from "./SceneHud";
 
 type Tab = "save" | "withdraw";
 type Note = { tone: "ok" | "err"; text: string; hash?: Hash };
@@ -132,7 +131,6 @@ export function SavePanel() {
     if (!done) return;
     setAmount("");
     setNote({ tone: "ok", text: `Saved ${fmt(toNum(parsed))} MUSD. Most of it crosses to Mezo on the keeper's next run.`, hash: done.hash });
-    sceneEvent({ kind: "saved", amount: fmtShort(toNum(parsed)) });
   }
 
   async function withdraw() {
@@ -151,7 +149,6 @@ export function SavePanel() {
       setAmount("");
       setIsMax(false);
       setNote({ tone: "ok", text: `${fmt(toNum(all ? position : parsed))} MUSD is back in your wallet.`, hash: done.hash });
-      sceneEvent({ kind: "paid", amount: fmtShort(toNum(all ? position : parsed)) });
       return;
     }
 
@@ -176,7 +173,6 @@ export function SavePanel() {
     setAmount("");
     setIsMax(false);
     setNote({ tone: "ok", text: "Withdrawal queued. Follow it below: it's paid to your wallet when the MUSD lands.", hash: done.hash });
-    sceneEvent({ kind: "requested" });
     await refetchExits();
   }
 
@@ -186,7 +182,6 @@ export function SavePanel() {
     );
     if (!done) return;
     setNote({ tone: "ok", text: `${fmtMusd(e.assets)} MUSD paid to your wallet.`, hash: done.hash });
-    sceneEvent({ kind: "paid", amount: fmtShort(toNum(e.assets)) });
     await refetchExits();
   }
 

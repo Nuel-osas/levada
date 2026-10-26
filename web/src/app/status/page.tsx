@@ -21,7 +21,7 @@ export default async function StatusPage() {
       <header className="top top--static">
         <div className="container top__in">
           <Link className="top__brand" href="/" aria-label="Levada, home">
-            <Lockup />
+            <Lockup size={30} />
           </Link>
           <nav className="top__nav top__nav--always" aria-label="Pages">
             <Link href="/">← Back to Levada</Link>

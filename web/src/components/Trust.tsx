@@ -1,13 +1,13 @@
 import { DEPLOYED, addresses, chainNames, links } from "@/lib/config";
 import { shortAddr } from "@/lib/format";
-import { PixelIcon, type GlyphName } from "./PixelIcon";
+import { Icon, type IconName } from "./Icon";
 
 type Proof = { label: string; href?: string; address?: string | null };
 
 const vault: Proof = { label: `LevadaVault on ${chainNames.base}`, address: addresses.vault, href: addresses.vault ? links.base(`address/${addresses.vault}`) : undefined };
 const hub: Proof = { label: `LevadaHub on ${chainNames.mezo}`, address: addresses.hub, href: addresses.hub ? links.mezo(`address/${addresses.hub}`) : undefined };
 
-const ROWS: { icon: GlyphName; title: string; proof: string; links: Proof[] }[] = [
+const ROWS: { icon: IconName; title: string; proof: string; links: Proof[] }[] = [
   {
     icon: "unlock",
     title: "Withdrawals can't be paused",
@@ -43,46 +43,34 @@ const ROWS: { icon: GlyphName; title: string; proof: string; links: Proof[] }[] 
   },
 ];
 
-/** Five plain statements, each opening to its proof: the contract it rests on, on the explorer. */
+/** Five plain statements, each with its proof: the contract it rests on, on the explorer. */
 export function Trust() {
   return (
-    <div className="trust">
-      <p className="trust__lead">
-        <span className="trust__chip">Built to be checked</span>
-        <span className="trust__hint">Open a line for its proof.</span>
-      </p>
-      <ul className="trust__list">
-        {ROWS.map((r, i) => (
-          <li key={r.title} className="reveal" style={{ ["--i" as string]: i }}>
-            <details className="trust__row">
-              <summary>
-                <span className="trust__title">{r.title}</span>
-                <span className="trust__tile" aria-hidden="true">
-                  <PixelIcon name={r.icon} scale={3} />
-                </span>
-              </summary>
-              <div className="trust__proof">
-                <p>{r.proof}</p>
-                {r.links.length > 0 && (
-                  <p className="trust__links">
-                    {r.links.map((l) =>
-                      l.href ? (
-                        <a key={l.label} href={l.href} target="_blank" rel="noreferrer">
-                          {l.label} <span className="mono">{shortAddr(l.address ?? "")}</span> ↗
-                        </a>
-                      ) : (
-                        <span key={l.label} className="trust__pending">
-                          {l.label}: {DEPLOYED ? "–" : "address published at launch"}
-                        </span>
-                      ),
-                    )}
-                  </p>
-                )}
-              </div>
-            </details>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className="trust">
+      {ROWS.map((r, i) => (
+        <li key={r.title} className="trust__card reveal" style={{ ["--i" as string]: i % 3 }}>
+          <span className="trust__icon">
+            <Icon name={r.icon} size={22} />
+          </span>
+          <h3 className="trust__title">{r.title}</h3>
+          <p className="trust__proof">{r.proof}</p>
+          {r.links.length > 0 && (
+            <p className="trust__links">
+              {r.links.map((l) =>
+                l.href ? (
+                  <a key={l.label} href={l.href} target="_blank" rel="noreferrer">
+                    {l.label} <span className="mono">{shortAddr(l.address ?? "")}</span> ↗
+                  </a>
+                ) : (
+                  <span key={l.label} className="trust__pending">
+                    {l.label}: {DEPLOYED ? "–" : "address published at launch"}
+                  </span>
+                ),
+              )}
+            </p>
+          )}
+        </li>
+      ))}
+    </ul>
   );
 }

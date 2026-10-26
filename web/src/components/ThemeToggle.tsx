@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import { PixelIcon } from "./PixelIcon";
+import { Icon } from "./Icon";
 
 const KEY = "levada-theme";
 
-/** Day or night. Night lights the scene, not the page. Follows the system until the user picks. */
+/** Light or dark. Follows the system until the user picks. */
 export function ThemeToggle() {
   useEffect(() => {
     const mq = matchMedia("(prefers-color-scheme: dark)");
@@ -29,9 +29,9 @@ export function ThemeToggle() {
   };
 
   return (
-    <button className="icon-btn theme-toggle" type="button" onClick={flip} aria-label="Switch between day and night">
-      <PixelIcon name="moon" scale={1} className="theme-toggle__moon" />
-      <PixelIcon name="sun" scale={1} className="theme-toggle__sun" />
+    <button className="icon-btn theme-toggle" type="button" onClick={flip} aria-label="Switch between light and dark">
+      <Icon name="moon" size={18} className="theme-toggle__moon" />
+      <Icon name="sun" size={18} className="theme-toggle__sun" />
     </button>
   );
 }

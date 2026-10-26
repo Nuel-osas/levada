@@ -8,7 +8,6 @@ import { ago, fmt, fmtPct, fmtShort, fmtSpan, fmtUsdShort, toNum, utcDay } from 
 import { useFaucetReady } from "@/lib/faucet";
 import { useApy, useMarket, useSavings } from "@/lib/hooks";
 import { Odometer } from "./Odometer";
-import { focusStage } from "./SceneHud";
 
 /** The keeper's GitHub Actions schedule (.github/workflows/keeper.yml): every 5 minutes, best effort. */
 const KEEPER_EVERY = 300;
@@ -48,8 +47,8 @@ function MainnetStations() {
           </p>
         </div>
 
-        <ol className="stations" onMouseLeave={() => focusStage(0)}>
-          <li className="station" data-n={1} onMouseEnter={() => focusStage(1)}>
+        <ol className="stations">
+          <li className="station" data-n={1}>
             <span className="station__idx">01</span>
             <span className="station__label">
               <i className="sw sw--ember" aria-hidden="true" />
@@ -58,7 +57,7 @@ function MainnetStations() {
             <span className="station__value">{fmtUsdShort(apy?.tvlUsd)}</span>
             <span className="station__cap">on Mezo, by all savers{when(apy?.asOf, apy?.stale)}</span>
           </li>
-          <li className="station" data-n={2} onMouseEnter={() => focusStage(2)}>
+          <li className="station" data-n={2}>
             <span className="station__idx">02</span>
             <span className="station__label">
               <i className="sw sw--aqua" aria-hidden="true" />
@@ -73,7 +72,7 @@ function MainnetStations() {
               {faucet ? <a href="#save">Try it with test MUSD ↓</a> : <a href="#how">See how it works ↓</a>}
             </span>
           </li>
-          <li className="station" data-n={3} onMouseEnter={() => focusStage(3)}>
+          <li className="station" data-n={3}>
             <span className="station__idx">03</span>
             <span className="station__label">
               <i className="sw sw--tide" aria-hidden="true" />
@@ -85,7 +84,7 @@ function MainnetStations() {
             </span>
             <span className="station__cap">the market Levada serves{when(supply?.asOf, supply?.stale)}</span>
           </li>
-          <li className="station" data-n={4} onMouseEnter={() => focusStage(4)}>
+          <li className="station" data-n={4}>
             <span className="station__idx">04</span>
             <span className="station__label">
               <i className="sw sw--gold" aria-hidden="true" />
@@ -156,9 +155,9 @@ function VaultStations() {
           </p>
         </div>
 
-        <ol className="stations" onMouseLeave={() => focusStage(0)}>
+        <ol className="stations">
           {stations.map((st) => (
-            <li key={st.n} className="station" data-n={st.n} onMouseEnter={() => focusStage(st.n)}>
+            <li key={st.n} className="station" data-n={st.n}>
               <span className="station__idx">0{st.n}</span>
               <span className="station__label">
                 <i className={`sw sw--${st.sw}`} aria-hidden="true" />
@@ -171,7 +170,7 @@ function VaultStations() {
               <span className="station__cap">{st.cap}</span>
             </li>
           ))}
-          <li className="station" data-n={4} onMouseEnter={() => focusStage(4)}>
+          <li className="station" data-n={4}>
             <span className="station__idx">04</span>
             <span className="station__label">
               <i className="sw sw--gold" aria-hidden="true" />

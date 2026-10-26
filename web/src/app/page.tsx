@@ -4,15 +4,16 @@ import { Connect } from "@/components/Connect";
 import { HeroTry } from "@/components/Faucet";
 import { FillLine } from "@/components/FillLine";
 import { Flow } from "@/components/Flow";
-import { RateChip, RateSource } from "@/components/HeroRate";
+import { HeroCard } from "@/components/HeroCard";
+import { RateSource } from "@/components/HeroRate";
+import { Icon } from "@/components/Icon";
 import { Lockup } from "@/components/Lockup";
 import { MezoStrip } from "@/components/MezoStrip";
 import { MobileBar } from "@/components/MobileBar";
 import { Questions } from "@/components/Questions";
 import { Reveal } from "@/components/Reveal";
 import { SavePanel } from "@/components/SavePanel";
-import { Scene } from "@/components/Scene";
-import { SceneLegend } from "@/components/SceneHud";
+import { Stack } from "@/components/Stack";
 import { Steps } from "@/components/Steps";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Trust } from "@/components/Trust";
@@ -30,12 +31,13 @@ export default function Home() {
       <header className="top">
         <div className="container top__in">
           <a className="top__brand" href="#top" aria-label="Levada, back to top">
-            <Lockup />
+            <Lockup size={30} />
           </a>
           <nav className="top__nav" aria-label="Sections">
             <a href="#how">How it works</a>
-            <a href="#questions">Questions</a>
-            <a href="#proof">Proof</a>
+            <a href="#stack">Built on Mezo</a>
+            <a href="#proof">Security</a>
+            <a href="#questions">FAQ</a>
             <Link href="/status">Status</Link>
           </nav>
           <div className="top__right">
@@ -44,101 +46,100 @@ export default function Home() {
             <Connect />
           </div>
         </div>
-        <MezoStrip />
       </header>
 
       <main id="top">
-        {/* One full-bleed sea under the header, the headline and the diorama: day in light mode, night in dark. */}
-        <div className="band">
-          <section className="hero" aria-labelledby="hero-title">
-            <div className="container hero__copy">
+        <section className="hero" aria-labelledby="hero-title">
+          <div className="hero__bg" aria-hidden="true" />
+          <div className="container hero__in">
+            <div className="hero__copy">
+              <p className="pill">
+                <span className="pill__dot" aria-hidden="true" />
+                Built on Mezo · Live on {chainNames.base}
+              </p>
               <h1 id="hero-title" className="hero__title">
-                <span className="t-warm">
-                  Mezo&apos;s savings rate <RateChip />,
-                </span>
-                <br />
-                <span className="t-cool hero__payoff">on Base.</span>
+                Mezo&apos;s savings rate, <span className="t-grad">now on Base.</span>
               </h1>
               <p className="hero__lede">
-                Deposit MUSD on Base and earn Mezo&apos;s savings rate, paid by Bitcoin borrowers. No bridging by hand, no
-                BTC for gas, withdraw any time.
-                <b className="hero__promise">Your yield lands on Base. Nothing to claim on Mezo, ever.</b>
+                Deposit MUSD on Base and earn yield paid by Bitcoin borrowers. One deposit, no bridging by hand, no BTC
+                for gas. Withdraw any time.
               </p>
               <div className="hero__actions" id="hero-actions">
                 <a className="btn-primary" href="#save">
-                  <span className="btn-primary__label" data-label="Save MUSD">
-                    Save MUSD
-                  </span>
+                  Start saving <Icon name="arrow" size={18} />
                 </a>
-                <a className="btn-link" href="#how">
-                  How it works <span aria-hidden="true">↓</span>
+                <a className="btn-ghost" href="#how">
+                  How it works
                 </a>
               </div>
-              <div className="hero__meta">
-                <HeroTry />
-                <p className="hero__source">
-                  <RateSource />
-                </p>
-              </div>
+              <HeroTry />
+              <p className="hero__source">
+                <RateSource />
+              </p>
             </div>
-            <Scene />
-            <div className="container">
-              <SceneLegend />
-            </div>
-          </section>
-          <div className="dither dither--bottom" aria-hidden="true">
-            <i />
-            <i />
-            <i />
+            <HeroCard />
           </div>
-        </div>
+          <MezoStrip />
+        </section>
 
         <Flow />
 
         <FillLine />
 
-        <section className="save container" id="save" aria-labelledby="save-title">
-          <h2 id="save-title" className="sr-only">
-            Save and withdraw
-          </h2>
-          <div className="save__balance reveal">
-            <Balance />
-          </div>
-          <div className="save__panel reveal" style={{ ["--i" as string]: 1 }}>
-            <SavePanel />
+        <section className="save-sec" id="save" aria-labelledby="save-title">
+          <div className="container">
+            <header className="section-head section-head--center reveal">
+              <p className="eyebrow">Save</p>
+              <h2 id="save-title" className="h2">
+                Put idle MUSD to work. <span className="t-muted">Take it back whenever.</span>
+              </h2>
+            </header>
+            <div className="save">
+              <div className="save__balance card reveal">
+                <Balance />
+              </div>
+              <div className="save__panel reveal" style={{ ["--i" as string]: 1 }}>
+                <SavePanel />
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className="how" id="how" aria-labelledby="how-title">
+        <section className="sec" id="how" aria-labelledby="how-title">
           <div className="container">
             <header className="section-head reveal">
               <p className="eyebrow">How it works</p>
               <h2 id="how-title" className="h2">
                 You save and withdraw. <span className="t-muted">A keeper does the rest.</span>
               </h2>
+              <p className="section-head__lede">
+                Every keeper step is permissionless. Anyone can run it, and it only ever pays gas.
+              </p>
             </header>
             <Steps />
           </div>
         </section>
 
-        <section className="questions" id="questions" aria-labelledby="q-title" data-theme="dark">
+        <section className="sec sec--soft" id="stack" aria-labelledby="stack-title">
           <div className="container">
             <header className="section-head reveal">
-              <p className="eyebrow">Questions</p>
-              <h2 id="q-title" className="h2">
-                Fair questions, short answers.
+              <p className="eyebrow">Built on Mezo</p>
+              <h2 id="stack-title" className="h2">
+                Made from Mezo&apos;s own parts. <span className="t-muted">Ready for the rest of DeFi.</span>
               </h2>
+              <p className="section-head__lede">
+                Levada doesn&apos;t compete with Mezo. It extends the MUSD Savings Rate to every MUSD holder on Base, and
+                hands back a token other protocols can build on.
+              </p>
             </header>
-            <div className="reveal">
-              <Questions />
-            </div>
+            <Stack />
           </div>
         </section>
 
-        <section className="proof" id="proof" aria-labelledby="proof-title">
+        <section className="sec" id="proof" aria-labelledby="proof-title">
           <div className="container">
             <header className="section-head reveal">
-              <p className="eyebrow">Proof</p>
+              <p className="eyebrow">Security</p>
               <h2 id="proof-title" className="h2">
                 Don&apos;t trust the page. <span className="t-muted">Check the contracts.</span>
               </h2>
@@ -146,12 +147,49 @@ export default function Home() {
             <Trust />
           </div>
         </section>
+
+        <section className="sec sec--soft" id="questions" aria-labelledby="q-title">
+          <div className="container faq">
+            <header className="section-head faq__head reveal">
+              <p className="eyebrow">FAQ</p>
+              <h2 id="q-title" className="h2">
+                Fair questions, short answers.
+              </h2>
+              <p className="section-head__lede">
+                Something else? Every figure on this page is read live. See the <Link href="/status">status page</Link>.
+              </p>
+            </header>
+            <div className="reveal">
+              <Questions />
+            </div>
+          </div>
+        </section>
+
+        <section className="cta-sec" aria-labelledby="cta-title">
+          <div className="container">
+            <div className="cta" data-theme="dark">
+              <div className="cta__glow" aria-hidden="true" />
+              <h2 id="cta-title" className="cta__title">
+                Every MUSD on Base, <span className="t-grad">earning Mezo&apos;s rate.</span>
+              </h2>
+              <p className="cta__lede">One deposit. Yield from Bitcoin borrowers. Withdraw any time.</p>
+              <div className="hero__actions">
+                <a className="btn-primary" href="#save">
+                  Start saving <Icon name="arrow" size={18} />
+                </a>
+                <a className="btn-ghost" href="https://github.com/Nuel-osas/levada" target="_blank" rel="noreferrer">
+                  Read the code ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer className="foot">
         <div className="container foot__in">
           <div className="foot__brand">
-            <Lockup scale={2} />
+            <Lockup size={30} />
             <p>{BRAND.tagline}</p>
           </div>
           <nav className="foot__cols" aria-label="Footer">
@@ -204,8 +242,8 @@ export default function Home() {
             <div>
               <p className="foot__h">Page</p>
               <a href="#how">How it works</a>
-              <a href="#questions">Questions</a>
-              <a href="#proof">Proof</a>
+              <a href="#proof">Security</a>
+              <a href="#questions">FAQ</a>
               <Link href="/status">Status</Link>
             </div>
           </nav>
