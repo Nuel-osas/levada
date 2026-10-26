@@ -651,3 +651,27 @@ a.btn-primary { text-decoration: none; }
 .pf__none { max-width: 640px; font-size: 15px; line-height: 1.6; color: var(--lv-text-subtle); }
 .pf__exits .exits { padding-top: 0; }
 .pf__exits .exits__title { display: none; }
+
+/* ---------- Asset and network logos ---------- */
+.tok { position: relative; display: inline-grid; place-items: center; flex: none; width: var(--t); height: var(--t); border-radius: 50%; vertical-align: middle; }
+.tok img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.tok--smusd { box-shadow: 0 0 0 2px var(--lv-bg), 0 0 0 3.5px var(--lv-mint-500); }
+.tok--lsmusd { background: var(--lv-ink-800); box-shadow: inset 0 0 0 1px var(--lv-border-strong); }
+.tokpair { display: inline-flex; align-items: center; flex: none; }
+.tokpair .tok + .tok { margin-left: calc(var(--t) * -0.32); box-shadow: 0 0 0 2px var(--lv-bg); }
+.hero__kicker .tok, .chip .tokpair { margin-inline: 2px; }
+.hstats dt, .summary dt, .t-token, .field__unit, .balance__unit, .pf__unit, .step__idx, .how__who, .trust__links a { display: inline-flex; align-items: center; gap: 8px; }
+.balance__unit, .pf__unit { gap: 10px; }
+.field__unit { gap: 8px; padding: 6px 12px 6px 6px; border-radius: var(--lv-radius-pill); background: rgb(236 233 226 / 0.06); color: var(--lv-text); }
+.save__cta-list li { align-items: center; }
+.save__cta-list li::before { display: none; }
+.marquee__w { gap: clamp(16px, 2vw, 32px); }
+.marquee__w .marquee__tok { margin-right: -0.1em; }
+.marquee__w--serif .marquee__tok { filter: grayscale(0.2); }
+.hs__mid { display: grid; gap: 22px; align-self: end; position: relative; }
+.hs__tok { --t: clamp(48px, 4.6vw, 72px) !important; box-shadow: 0 20px 50px -10px rgb(0 0 0 / 0.6); }
+.hs__tok.tok--smusd { box-shadow: 0 0 0 3px var(--lv-surface), 0 0 0 5px var(--lv-mint-500), 0 20px 50px -10px rgb(0 0 0 / 0.6); }
+.hs__name { align-self: auto; }
+.foot__built { display: grid; gap: 18px; padding-block: 36px; border-top: 1px solid var(--lv-border-strong); }
+.foot__built ul { display: flex; flex-wrap: wrap; gap: 14px 36px; }
+.foot__built li { display: inline-flex; align-items: center; gap: 12px; font: 600 clamp(15px, 1.3vw, 19px)/1 var(--font-display); letter-spacing: -0.03em; }

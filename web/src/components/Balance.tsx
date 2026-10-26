@@ -5,6 +5,7 @@ import { BRAND, DEPLOYED, LAUNCH } from "@/lib/config";
 import { fmt, fmtMusd, fmtPct, toNum } from "@/lib/format";
 import { netRate, useEstimate, useSavings } from "@/lib/hooks";
 import { Odometer } from "./Odometer";
+import { Token } from "./Token";
 
 /** Amounts the slider steps through: round numbers, denser at the small end. */
 const STOPS = [
@@ -33,7 +34,9 @@ export function Balance() {
         <p className="balance__lead">Your savings</p>
         <div className="balance__num">
           <Odometer value={s.mine} label="Your savings, about" className="odo--xl" />
-          <span className="balance__unit">MUSD</span>
+          <span className="balance__unit">
+            <Token name="musd" size={24} /> MUSD
+          </span>
         </div>
         <p className="balance__tail">
           Live estimate: what the vault values your {fmtMusd(s.vault.shares, 4)} {BRAND.token} at, plus about{" "}
@@ -87,13 +90,13 @@ export function Balance() {
         </div>
         <div>
           <dt>
-            <i className="sw sw--tide" aria-hidden="true" /> Instant on exit, from the Base buffer
+            <Token name="base" size={16} /> Instant on exit, from the Base buffer
           </dt>
           <dd>{fmt(instant, 0)} MUSD</dd>
         </div>
         <div>
           <dt>
-            <i className="sw sw--aqua" aria-hidden="true" /> Queued, paid in order from Mezo
+            <Token name="wormhole" size={16} /> Queued, paid in order from Mezo
           </dt>
           <dd>{fmt(queued, 0)} MUSD</dd>
         </div>
@@ -125,7 +128,9 @@ export function Balance() {
         <p className="balance__lead">Savers have earned</p>
         <div className="balance__num">
           <Odometer value={s.earned} label="Savers have earned about" className="odo--xl" />
-          <span className="balance__unit">MUSD</span>
+          <span className="balance__unit">
+            <Token name="musd" size={24} /> MUSD
+          </span>
         </div>
         <p className="balance__tail">
           from Bitcoin borrowers on Mezo. Live estimate, at Mezo&apos;s <b className="t-yield">{fmtPct(apy)}</b> savings
@@ -140,7 +145,9 @@ export function Balance() {
       <p className="balance__lead">Watch {fmt(amount, 0)} MUSD grow</p>
       <div className="balance__num">
         <Odometer value={example} label={`Example: ${fmt(amount, 0)} MUSD grows to about`} className="odo--xl" />
-        <span className="balance__unit">MUSD</span>
+        <span className="balance__unit">
+            <Token name="musd" size={24} /> MUSD
+          </span>
       </div>
       <p className="balance__tail">
         An example at Mezo&apos;s savings rate today, {fmtPct(apy)} a year: about{" "}

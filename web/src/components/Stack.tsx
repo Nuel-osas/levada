@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { BRAND } from "@/lib/config";
+import { Token } from "./Token";
 
 const PARTS = [
   {
@@ -10,6 +11,7 @@ const PARTS = [
     name: "MUSD",
     body: "Mezo's Bitcoin-backed stablecoin. You deposit it on Base; the hub stakes it on Mezo.",
     tone: "warm",
+    tok: "musd",
   },
   {
     n: "02",
@@ -17,6 +19,7 @@ const PARTS = [
     name: "Wormhole NTT",
     body: "MUSD's own bridge between Base and Mezo. 13 of 19 guardians sign every transfer. Levada adds no new bridge trust.",
     tone: "ink",
+    tok: "wormhole",
   },
   {
     n: "03",
@@ -24,6 +27,7 @@ const PARTS = [
     name: "sMUSD",
     body: "Mezo's MUSD Savings Rate, paid by interest on Bitcoin-backed loans. Every Levada deposit is new sMUSD demand.",
     tone: "mint",
+    tok: "smusd",
   },
   {
     n: "04",
@@ -31,6 +35,7 @@ const PARTS = [
     name: BRAND.token,
     body: "A standard ERC-4626 token on Base. Ready to be collateral in lending markets, a leg in DEX pools, a block in other vaults.",
     tone: "cool",
+    tok: "lsmusd",
   },
 ] as const;
 
@@ -101,7 +106,10 @@ export function Stack() {
                 <span className="hs__n">{p.n}</span>
                 <span className="hs__role">{p.role}</span>
               </div>
-              <h3 className="hs__name">{p.name}</h3>
+              <div className="hs__mid">
+                <Token name={p.tok} size={64} className="hs__tok" />
+                <h3 className="hs__name">{p.name}</h3>
+              </div>
               <p className="hs__body">{p.body}</p>
               <span className="hs__orb" aria-hidden="true" />
             </li>

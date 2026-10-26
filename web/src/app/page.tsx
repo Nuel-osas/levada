@@ -13,6 +13,7 @@ import { Preloader } from "@/components/Preloader";
 import { Questions } from "@/components/Questions";
 import { Stack } from "@/components/Stack";
 import { Steps } from "@/components/Steps";
+import { Token, TokenPair } from "@/components/Token";
 import { Trust } from "@/components/Trust";
 import { BRAND, NETWORK, addresses, chainNames, links, mezoLinks } from "@/lib/config";
 
@@ -67,7 +68,7 @@ export default function Home() {
           <div className="hero__fade" aria-hidden="true" />
           <div className="hero__in">
             <p className="hero__kicker">
-              <span className="live-dot" aria-hidden="true" /> Built on Mezo · Live on {chainNames.base}
+              <span className="live-dot" aria-hidden="true" /> Built on <Token name="mezo" size={18} /> Mezo · Live on <Token name="base" size={18} /> {chainNames.base}
             </p>
             <h1 id="hero-title" className="hero__title">
               <span className="line">
@@ -127,9 +128,9 @@ export default function Home() {
                   Save, withdraw and track it all in <em>one place.</em>
                 </p>
                 <ul className="save__cta-list">
-                  <li>Deposit MUSD on {chainNames.base} in one signature</li>
-                  <li>Watch your savings tick up every second</li>
-                  <li>Follow every withdrawal home from Mezo</li>
+                  <li><TokenPair a="musd" b="base" size={20} /> Deposit MUSD on {chainNames.base} in one signature</li>
+                  <li><Token name="lsmusd" size={20} /> Watch your savings tick up every second</li>
+                  <li><Token name="wormhole" size={20} /> Follow every withdrawal home from Mezo</li>
                 </ul>
                 <div className="save__cta-actions">
                   <Link className="btn-round" href="/app" data-magnetic data-cursor="Open">
@@ -189,6 +190,17 @@ export default function Home() {
             <Link className="btn-round btn-round--lg" href="/app" data-magnetic data-cursor="Open">
               <span>Launch app</span>
             </Link>
+          </div>
+          <div className="foot__built" aria-label="Built with">
+            <p className="foot__h">Built with</p>
+            <ul>
+              <li><Token name="mezo" size={28} /> Mezo</li>
+              <li><Token name="musd" size={28} /> MUSD</li>
+              <li><Token name="smusd" size={28} /> sMUSD</li>
+              <li><Token name="base" size={28} /> Base</li>
+              <li><Token name="wormhole" size={28} /> Wormhole NTT</li>
+              <li><Token name="btc" size={28} /> Bitcoin collateral</li>
+            </ul>
           </div>
           <nav className="foot__cols" aria-label="Footer">
             <div>

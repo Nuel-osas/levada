@@ -11,6 +11,7 @@ import { fmt, fmtMusd, fmtPct, shortAddr, toNum } from "@/lib/format";
 import { useExits, useSavings, type ExitView } from "@/lib/hooks";
 import { Exits } from "./Exits";
 import { Odometer } from "./Odometer";
+import { Token } from "./Token";
 
 type Note = { tone: "ok" | "err"; text: string; hash?: Hash };
 
@@ -108,10 +109,12 @@ export function Portfolio() {
           <p className="pf__label">Your savings · live estimate</p>
           <div className="pf__value">
             <Odometer value={s.mode === "mine" ? s.mine : 0} label="Your savings, about" className="odo--xl" />
-            <span className="pf__unit">MUSD</span>
+            <span className="pf__unit">
+              <Token name="musd" size={24} /> MUSD
+            </span>
           </div>
           <p className="pf__sub">
-            {fmtMusd(vault.shares, 4)} <span className="t-token">{BRAND.token}</span>, valued by the vault and ticking at
+            <Token name="lsmusd" size={18} /> {fmtMusd(vault.shares, 4)} <span className="t-token">{BRAND.token}</span>, valued by the vault and ticking at
             about <b className="t-yield">{fmtPct(s.rate === undefined ? undefined : s.rate * 100)}</b> a year after fees.
           </p>
           <div className="pf__actions">

@@ -1,5 +1,6 @@
 import { DEPLOYED, addresses, chainNames, links } from "@/lib/config";
 import { shortAddr } from "@/lib/format";
+import { Token } from "./Token";
 
 type Proof = { label: string; href?: string; address?: string | null };
 
@@ -52,7 +53,7 @@ export function Trust() {
                 {r.links.map((l) =>
                   l.href ? (
                     <a key={l.label} href={l.href} target="_blank" rel="noreferrer">
-                      {l.label} <span className="mono">{shortAddr(l.address ?? "")}</span> ↗
+                      <Token name={l.label.includes("Mezo") ? "mezo" : "base"} size={16} /> {l.label} <span className="mono">{shortAddr(l.address ?? "")}</span> ↗
                     </a>
                   ) : (
                     <span key={l.label} className="trust__pending">

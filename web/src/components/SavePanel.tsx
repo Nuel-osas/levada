@@ -18,6 +18,7 @@ import { fmt, fmtMusd, fmtPct, parseAmount, toNum } from "@/lib/format";
 import { netRate, rememberExit, useApy, useExits, useHub, useVault, type ExitView } from "@/lib/hooks";
 import { Exits } from "./Exits";
 import { FaucetAction } from "./Faucet";
+import { Token } from "./Token";
 
 type Tab = "save" | "withdraw";
 type Note = { tone: "ok" | "err"; text: string; hash?: Hash };
@@ -249,7 +250,9 @@ export function SavePanel() {
                 setIsMax(false);
               }}
             />
-            <span className="field__unit">MUSD</span>
+            <span className="field__unit">
+              <Token name="musd" size={22} /> MUSD
+            </span>
             <button
               type="button"
               className="chip chip--gold chip--btn"
@@ -272,11 +275,15 @@ export function SavePanel() {
                 <dt>You get</dt>
                 <dd>
                   {DEPLOYED && parsed && preview.data !== undefined ? `≈ ${fmtMusd(preview.data, 4)}` : "–"}{" "}
-                  <span className="t-token">{BRAND.token}</span>
+                  <span className="t-token">
+                    <Token name="lsmusd" size={16} /> {BRAND.token}
+                  </span>
                 </dd>
               </div>
               <div>
-                <dt>Earning</dt>
+                <dt>
+                  <Token name="smusd" size={16} /> Earning
+                </dt>
                 <dd>
                   <span className="t-yield">{DEPLOYED && rate !== undefined ? `≈ ${fmtPct(rate * 100)}` : fmtPct(apy?.apy)}</span>{" "}
                   {DEPLOYED ? "a year, after fees" : "a year on Mezo"}

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { NETWORK, chainNames } from "@/lib/config";
 import { Connect } from "./Connect";
 import { Lockup } from "./Lockup";
+import { TokenPair } from "./Token";
 
 const TABS = [
   { href: "/app", label: "Save" },
@@ -34,7 +35,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="appbar__right">
             {NETWORK === "testnet" && (
               <span className="chip chip--sm" title={`Levada runs on ${chainNames.base} and ${chainNames.mezo}`}>
-                Testnet
+                <TokenPair a="base" b="mezo" size={16} /> Testnet
               </span>
             )}
             <Connect />

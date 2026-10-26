@@ -8,6 +8,9 @@ import { ago, fmt, fmtPct, fmtShort, fmtSpan, fmtUsdShort, toNum, utcDay } from 
 import { useFaucetReady } from "@/lib/faucet";
 import { useApy, useMarket, useSavings } from "@/lib/hooks";
 import { Odometer } from "./Odometer";
+import { Token, type TokenName } from "./Token";
+
+const SW: Record<string, TokenName> = { ember: "mezo", aqua: "wormhole", tide: "base", gold: "smusd" };
 
 /** The keeper's GitHub Actions schedule (.github/workflows/keeper.yml): every 5 minutes, best effort. */
 const KEEPER_EVERY = 300;
@@ -51,7 +54,7 @@ function MainnetStations() {
           <li className="station" data-n={1}>
             <span className="station__idx">01</span>
             <span className="station__label">
-              <i className="sw sw--ember" aria-hidden="true" />
+              <Token name="mezo" size={18} />
               Saved in sMUSD
             </span>
             <span className="station__value">{fmtUsdShort(apy?.tvlUsd)}</span>
@@ -60,7 +63,7 @@ function MainnetStations() {
           <li className="station" data-n={2}>
             <span className="station__idx">02</span>
             <span className="station__label">
-              <i className="sw sw--aqua" aria-hidden="true" />
+              <Token name="wormhole" size={18} />
               Levada vault
             </span>
             <span className="station__value station__value--status">
@@ -75,7 +78,7 @@ function MainnetStations() {
           <li className="station" data-n={3}>
             <span className="station__idx">03</span>
             <span className="station__label">
-              <i className="sw sw--tide" aria-hidden="true" />
+              <Token name="base" size={18} />
               MUSD on Base
             </span>
             <span className="station__value">
@@ -87,7 +90,7 @@ function MainnetStations() {
           <li className="station" data-n={4}>
             <span className="station__idx">04</span>
             <span className="station__label">
-              <i className="sw sw--gold" aria-hidden="true" />
+              <Token name="smusd" size={18} />
               sMUSD savings rate
             </span>
             <span className="station__value t-yield">{fmtPct(apy?.apy)}</span>
@@ -160,7 +163,7 @@ function VaultStations() {
             <li key={st.n} className="station" data-n={st.n}>
               <span className="station__idx">0{st.n}</span>
               <span className="station__label">
-                <i className={`sw sw--${st.sw}`} aria-hidden="true" />
+                <Token name={SW[st.sw]} size={18} />
                 {st.label}
               </span>
               <span className={st.value === undefined ? "station__value is-empty" : "station__value"}>
@@ -173,7 +176,7 @@ function VaultStations() {
           <li className="station" data-n={4}>
             <span className="station__idx">04</span>
             <span className="station__label">
-              <i className="sw sw--gold" aria-hidden="true" />
+              <Token name="smusd" size={18} />
               Yield earned
             </span>
             <span className="station__value">

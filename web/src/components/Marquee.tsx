@@ -1,8 +1,17 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { Token, type TokenName } from "./Token";
 
-const WORDS = ["MUSD", "sMUSD", "lsMUSD", "Bitcoin-backed yield", "One deposit", "Base", "Mezo"];
+const WORDS: [string, TokenName | null][] = [
+  ["MUSD", "musd"],
+  ["sMUSD", "smusd"],
+  ["lsMUSD", "lsmusd"],
+  ["Bitcoin-backed yield", "btc"],
+  ["One deposit", null],
+  ["Base", "base"],
+  ["Mezo", "mezo"],
+];
 
 /** A giant running line. It drifts on its own, speeds up with scrolling and turns with its direction. */
 export function Marquee() {
@@ -37,8 +46,9 @@ export function Marquee() {
 
   const row = (copy: boolean) => (
     <div className="marquee__row" aria-hidden={copy || undefined}>
-      {WORDS.map((w, i) => (
+      {WORDS.map(([w, t], i) => (
         <span key={w} className={i % 2 ? "marquee__w marquee__w--serif" : "marquee__w"}>
+          {t && <Token name={t} size="0.62em" className="marquee__tok" />}
           {w}
           <span className="marquee__star" aria-hidden="true">
             ✺
